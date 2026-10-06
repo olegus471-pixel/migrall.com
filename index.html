@@ -1,0 +1,1466 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MigrAll — Иммиграция в Португалию</title>
+<meta name="description" content="MigrAll — иммиграционное агентство. Переезд в Португалию: подбор ВНЖ, документы, сопровождение до карты резидента.">
+<link rel="icon" href="logo.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#141B2D;--ink2:#3A4357;--ink3:#6B7385;
+  --pt:#1B3461;--pt2:#122649;--pt-sky:#EEF1F6;--pt-sky2:#D6DDE8;
+  --gold:#A8834F;--gold-d:#8A6A3C;--gold-soft:#F4EEE4;
+  --navy-grad:linear-gradient(135deg,#1B3461 0%,#24457C 100%);
+  --ok:#2F6B4F;--ok-bg:#E6F1EA;--warn:#8A5A1C;--warn-bg:#F6EEDF;
+  --white:#fff;--border:#E3E6ED;--r:12px;
+  --sh:0 1px 2px rgba(20,27,45,.05),0 8px 24px rgba(20,27,45,.06);
+  --sh2:0 4px 12px rgba(20,27,45,.08),0 18px 40px rgba(20,27,45,.12);
+  --acc:var(--pt);--acc2:var(--pt2);--sky:var(--pt-sky);--sky2:var(--pt-sky2);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);background:transparent;overflow-x:hidden}
+#bg-flow{position:fixed;inset:0;z-index:-1;background:#fff}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.display{font-family:'Fraunces',Georgia,serif;font-weight:600;letter-spacing:-.02em;line-height:1.1}
+.display-lg{font-size:clamp(2.4rem,5vw,4.2rem)}
+.display-md{font-size:clamp(1.6rem,3vw,2.5rem)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+
+
+/* Nav */
+nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo img{height:40px;width:auto;display:block}
+.nav-links{display:flex;align-items:center;gap:24px}
+.nav-links a:not(.btn-nav){font-size:.875rem;font-weight:500;color:var(--ink2);transition:color .15s}
+.nav-links a:not(.btn-nav):hover{color:var(--acc)}
+.nav-burger{display:none;width:44px;height:44px;border:none;background:none;cursor:pointer;flex-direction:column;justify-content:center;align-items:center;gap:5px;margin-right:-10px}
+.nav-burger span{display:block;width:22px;height:2px;border-radius:2px;background:var(--ink);transition:transform .25s,opacity .2s}
+nav.open .nav-burger span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+nav.open .nav-burger span:nth-child(2){opacity:0}
+nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.lang-sw{display:flex;gap:3px;background:var(--sky);border-radius:8px;padding:3px}
+.lang-btn{font-size:.75rem;font-weight:600;padding:4px 10px;border-radius:6px;cursor:pointer;color:var(--ink3);border:none;background:none;transition:all .15s}
+.lang-btn.active{background:var(--white);color:var(--acc);box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.btn-nav{display:inline-block;background:var(--navy-grad);color:#fff;padding:8px 18px;border-radius:8px;font-size:.875rem;font-weight:600;transition:all .15s}
+.btn-nav:hover{background:var(--acc2)}
+
+/* Hero */
+.hero{position:relative;height:90vh;min-height:560px;max-height:820px;overflow:hidden;display:flex;align-items:center;background:#14223F}
+.hero-media{position:absolute;inset:0;z-index:0}
+.hero-media video{width:100%;height:100%;object-fit:cover}
+.hero-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transform:scale(1.08);transition:opacity 1.6s ease}
+.hero-slide.on{opacity:1;animation:kenburns 9s ease-out forwards}
+@keyframes kenburns{from{transform:scale(1.08)}to{transform:scale(1)}}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(100deg,rgba(14,24,46,.82) 0%,rgba(17,32,62,.58) 45%,rgba(17,32,62,.1) 100%);z-index:1}
+.hero::after{content:'';position:absolute;left:0;right:0;bottom:0;height:200px;background:linear-gradient(to bottom,transparent,var(--flow-bg,#fff));z-index:1;pointer-events:none}
+.hero-content{position:relative;z-index:2;width:100%}
+.hero-content>*{max-width:600px}
+.hero-badge-x{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);backdrop-filter:blur(8px);color:#fff;font-size:.8125rem;font-weight:600;padding:6px 16px;border-radius:20px;margin-bottom:24px;border:1px solid rgba(255,255,255,.2)}
+.hero h1{color:#fff;margin-bottom:18px}
+.hero h1 .line{display:block;overflow:hidden}
+.hero h1 .line span{display:inline-block;transform:translateY(105%);animation:rise .9s cubic-bezier(.2,.7,.2,1) forwards}
+.hero h1 .line:nth-child(2) span{animation-delay:.12s;font-style:italic;font-weight:300;color:rgba(255,255,255,.82)}
+.hero h1 .line:nth-child(3) span{animation-delay:.24s}
+@keyframes rise{to{transform:none}}
+.hero-sub{font-size:1.0625rem;color:rgba(255,255,255,.78);margin-bottom:36px;line-height:1.7;opacity:0;animation:fadein .8s .45s forwards}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap;opacity:0;animation:fadein .8s .6s forwards}
+@keyframes fadein{to{opacity:1}}
+.hero-dots{position:absolute;z-index:2;bottom:120px;left:50%;transform:translateX(-50%);display:flex;gap:8px}
+.hero-dot{width:28px;height:3px;border-radius:2px;background:rgba(255,255,255,.3);border:none;cursor:pointer;padding:0;overflow:hidden;position:relative}
+.hero-dot.on::after{content:'';position:absolute;inset:0;background:#fff;transform-origin:left;animation:dotfill 6s linear forwards}
+@keyframes dotfill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.btn-primary{background:var(--navy-grad);letter-spacing:.01em;color:#fff;padding:14px 28px;border-radius:10px;font-size:.9375rem;font-weight:600;cursor:pointer;border:none;transition:all .2s;display:inline-flex;align-items:center;gap:8px}
+.btn-primary:hover{background:var(--acc2);transform:translateY(-2px);box-shadow:0 10px 28px rgba(27,52,97,.28),inset 0 0 0 1px rgba(168,131,79,.55)}
+.btn-ghost-white{background:rgba(255,255,255,.12);backdrop-filter:blur(8px);color:#fff;padding:14px 24px;border-radius:10px;font-size:.9375rem;font-weight:500;cursor:pointer;border:1.5px solid rgba(255,255,255,.3);transition:all .2s}
+.btn-ghost-white:hover{background:rgba(255,255,255,.22)}
+.btn-ghost{background:var(--white);color:var(--ink);padding:13px 22px;border-radius:10px;font-size:.9375rem;font-weight:500;cursor:pointer;border:1.5px solid var(--border);transition:all .15s}
+.btn-ghost:hover{border-color:var(--acc);color:var(--acc)}
+
+
+/* Sections */
+section{padding:80px 0}
+.section-tag{font-size:.8125rem;font-weight:600;color:var(--gold-d);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.section-tag::before{content:'';width:28px;height:1px;background:var(--gold)}
+.section-title{margin-bottom:14px}
+.section-sub{font-size:1rem;color:var(--ink2);max-width:560px;line-height:1.7;margin-bottom:40px}
+
+/* Reveal on scroll */
+/* Плавное перетекание блоков при прокрутке (прозрачность задаёт скрипт) */
+.flow{will-change:opacity,transform;transition:opacity .25s linear}
+
+
+/* Quiz */
+.quiz-bg{padding:120px 0}
+.quiz-card{background:var(--white);border-radius:20px;box-shadow:var(--sh);padding:36px;max-width:760px}
+.quiz-progress{display:flex;gap:6px;margin-bottom:28px}
+.quiz-progress span{flex:1;height:4px;border-radius:2px;background:var(--border);transition:background .3s}
+.quiz-progress span.on{background:var(--acc)}
+.quiz-step{font-size:.8125rem;color:var(--ink3);margin-bottom:8px}
+.quiz-q{font-family:'Fraunces',Georgia,serif;font-size:1.5rem;font-weight:600;line-height:1.25;margin-bottom:22px}
+.quiz-opts{display:grid;gap:10px}
+.quiz-opt{text-align:left;padding:15px 18px;border-radius:12px;border:1.5px solid var(--border);background:var(--white);font-size:.9375rem;color:var(--ink);cursor:pointer;transition:all .15s}
+.quiz-opt:hover{border-color:var(--acc);background:var(--sky)}
+.quiz-back{margin-top:20px;background:none;border:none;color:var(--ink3);font-size:.875rem;cursor:pointer;padding:4px 0}
+.quiz-back:hover{color:var(--acc)}
+.quiz-anim{animation:qin .35s ease}
+@keyframes qin{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:none}}
+.res-label{font-size:.8125rem;color:var(--ink3);margin-bottom:6px}
+.res-title{font-family:'Fraunces',Georgia,serif;font-size:1.75rem;font-weight:600;line-height:1.2;margin-bottom:12px}
+.res-why{font-size:.9375rem;color:var(--ink2);line-height:1.7;margin-bottom:18px}
+.res-box{border-radius:12px;padding:14px 16px;font-size:.875rem;line-height:1.6;margin-bottom:20px}
+.res-box.ok{background:var(--ok-bg);color:var(--ok)}
+.res-box.warn{background:var(--warn-bg);color:var(--warn)}
+.res-actions{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+.res-second{border-left:3px solid var(--sky2);padding:2px 0 2px 16px;margin-bottom:22px}
+.consults{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:6px 0 18px}
+.consult{border:1.5px solid var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column}
+.consult-head{display:flex;justify-content:space-between;gap:8px;font-weight:600;margin-bottom:8px}
+.consult-head b{color:var(--gold-d)}
+.consult p{font-size:.8125rem;color:var(--ink2);line-height:1.6;margin-bottom:14px;flex:1}
+.consult .btn-ghost,.consult .btn-primary{justify-content:center;text-align:center;padding:11px 16px;font-size:.875rem}
+@media(max-width:640px){.consults{grid-template-columns:1fr}}
+.res-note{font-size:.75rem;color:var(--ink3);line-height:1.5}
+.res-restart{background:none;border:none;color:var(--acc);font-weight:600;font-size:.875rem;cursor:pointer;margin-top:10px;padding:0}
+
+/* Calculator */
+.calc-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:24px;align-items:start}
+.calc-panel{background:var(--white);border:1px solid var(--border);border-radius:20px;padding:28px}
+.calc-label{font-size:.8125rem;font-weight:600;color:var(--ink2);margin:0 0 10px}
+.calc-field{margin-bottom:24px}
+.calc-field:last-child{margin-bottom:0}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{padding:10px 14px;border-radius:10px;border:1.5px solid var(--border);background:var(--white);font-size:.875rem;cursor:pointer;color:var(--ink2);transition:all .15s;text-align:left}
+.seg button.on{border-color:var(--acc);background:var(--sky);color:var(--acc);font-weight:600}
+.seg button small{display:block;font-weight:400;color:var(--ink3);font-size:.75rem;margin-top:2px}
+.stepper{display:inline-flex;align-items:center;border:1.5px solid var(--border);border-radius:10px;overflow:hidden}
+.stepper button{width:42px;height:42px;border:none;background:var(--white);font-size:1.2rem;cursor:pointer;color:var(--ink2)}
+.stepper button:hover{background:var(--sky);color:var(--acc)}
+.stepper output{min-width:44px;text-align:center;font-weight:600}
+.income-in{display:flex;min-width:0;align-items:center;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;max-width:260px}
+.income-in:focus-within{border-color:var(--acc)}
+.income-in input{flex:1;border:none;padding:12px 14px;font-size:1rem;font-family:inherit;outline:none;min-width:0}
+.income-in span{padding:0 14px;color:var(--ink3)}
+.calc-result{background:linear-gradient(150deg,#14223F 0%,#1B3461 55%,#27497F 100%);color:#fff;border-radius:20px;padding:28px;position:sticky;top:80px;box-shadow:0 18px 40px rgba(20,34,63,.28);border:1px solid rgba(168,131,79,.35)}
+.cr-label{font-size:.8125rem;color:rgba(255,255,255,.75);margin-bottom:6px}
+.cr-big{font-family:'Fraunces',Georgia,serif;font-size:2.75rem;font-weight:600;color:#fff;line-height:1;margin-bottom:4px;font-variant-numeric:tabular-nums}
+.cr-big small{font-size:1rem;font-weight:400;color:rgba(255,255,255,.75);font-family:'Inter',sans-serif}
+.cr-year{font-size:.875rem;color:rgba(255,255,255,.85);margin-bottom:22px}
+.cr-lines{border-top:1px solid rgba(168,131,79,.45);padding-top:14px;margin-bottom:20px}
+.cr-line{display:flex;justify-content:space-between;font-size:.8125rem;color:rgba(255,255,255,.85);padding:5px 0;gap:12px}
+.cr-line b{color:#fff;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.cr-bar{height:8px;border-radius:4px;background:rgba(255,255,255,.25);overflow:hidden;margin:6px 0 10px}
+.cr-bar i{display:block;height:100%;border-radius:4px;background:var(--acc);width:0;transition:width .6s cubic-bezier(.4,0,.2,1),background .3s}
+.cr-status{font-size:.875rem;line-height:1.5;min-height:42px}
+.cr-status{background:rgba(255,255,255,.14);border-radius:10px;padding:10px 12px;min-height:0}
+.cr-status.ok{color:#fff}.cr-status.no{color:#fff}
+.cr-note{font-size:.75rem;color:rgba(255,255,255,.75);line-height:1.5;margin-top:18px}
+.calc-result .btn-primary{margin-top:18px;width:100%;justify-content:center;background:#fff;color:var(--pt)}
+.calc-result .btn-primary:hover{background:var(--gold-soft);box-shadow:none}
+
+/* Services */
+.svc-bg{padding:110px 0}
+/* Слайдер услуг: стрелки по бокам, видимые поля слева и справа */
+.svc-slider{position:relative;margin:0 -24px;overflow:hidden}
+.svc-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:46px;height:46px;border-radius:50%;border:1.5px solid var(--border);background:var(--white);color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--sh2);transition:all .15s}
+.svc-arrow.prev{left:8px}
+.svc-arrow.next{right:8px}
+.svc-arrow:hover:not(:disabled){border-color:var(--acc);color:var(--acc)}
+.svc-arrow:disabled{opacity:0;pointer-events:none}
+.svc-grid{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:6px 64px 18px;scrollbar-width:none;scroll-padding-left:64px;
+  -webkit-mask-image:linear-gradient(to right,transparent,#000 56px,#000 calc(100% - 56px),transparent);
+  mask-image:linear-gradient(to right,transparent,#000 56px,#000 calc(100% - 56px),transparent)}
+.svc-grid::-webkit-scrollbar{display:none}
+.svc-grid .svc-card{flex:0 0 260px;scroll-snap-align:start;display:flex;flex-direction:column;padding:20px}
+.svc-grid .svc-desc{flex:1;margin-bottom:0}
+.svc-cta{margin-top:28px}
+/* Форма заявки */
+.lead-modal{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:16px}
+.lead-modal[hidden]{display:none}
+.lead-backdrop{position:absolute;inset:0;background:rgba(15,23,42,.45);backdrop-filter:blur(3px);animation:fadein .2s forwards;opacity:0}
+.lead-box{position:relative;background:#fff;border-radius:20px;width:100%;max-width:520px;max-height:calc(100svh - 32px);overflow-y:auto;padding:30px;box-shadow:0 24px 60px rgba(15,23,42,.25);animation:qin .25s ease}
+.lead-close{position:absolute;top:14px;right:14px;width:40px;height:40px;border:none;background:none;border-radius:50%;cursor:pointer;color:var(--ink3);display:flex;align-items:center;justify-content:center}
+.lead-close:hover{background:var(--sky);color:var(--ink)}
+.lead-title{font-family:'Fraunces',Georgia,serif;font-size:1.5rem;font-weight:600;margin:0 40px 6px 0;line-height:1.2}
+.lead-sub{font-size:.875rem;color:var(--ink2);line-height:1.6;margin-bottom:20px}
+.lf{margin-bottom:14px}
+.lf label{display:block;font-size:.8125rem;font-weight:600;color:var(--ink2);margin-bottom:6px}
+.lf input,.lf select,.lf textarea{width:100%;font:inherit;font-size:.9375rem;color:var(--ink);padding:11px 13px;border:1.5px solid var(--border);border-radius:10px;background:#fff;outline:none;transition:border-color .15s}
+.lf textarea{resize:vertical;min-height:84px}
+.lf input:focus,.lf select:focus,.lf textarea:focus{border-color:var(--acc)}
+.lf .err-msg{display:none;color:#b91c1c;font-size:.75rem;margin-top:4px}
+.lf.err input,.lf.err select{border-color:#dc2626}
+.lf.err .err-msg{display:block}
+.lf-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.lf-chips{display:flex;flex-wrap:wrap;gap:6px}
+.lf-chips button{padding:8px 12px;border-radius:8px;border:1.5px solid var(--border);background:#fff;font-size:.8125rem;cursor:pointer;color:var(--ink2)}
+.lf-chips button.on{border-color:var(--acc);background:var(--sky);color:var(--acc);font-weight:600}
+.lf-consent{display:flex;gap:10px;align-items:flex-start;font-size:.8125rem;color:var(--ink2);line-height:1.5;margin:6px 0 18px}
+.lf-consent input{margin-top:3px;width:16px;height:16px;flex-shrink:0;accent-color:var(--acc)}
+.lf-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.lead-box .btn-primary{width:100%;justify-content:center}
+.lead-box .btn-primary:disabled{opacity:.6;cursor:wait;transform:none}
+.lead-note{font-size:.75rem;color:var(--ink3);margin-top:10px;line-height:1.5}
+.lead-done{text-align:center;padding:20px 0 6px}
+.lead-done .ok-ic{width:56px;height:56px;border-radius:50%;background:var(--ok-bg);color:var(--ok);display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.lead-fail{background:var(--warn-bg);color:var(--warn);border-radius:10px;padding:12px 14px;font-size:.8125rem;line-height:1.55;margin-bottom:14px}
+.lead-fail a{color:inherit;font-weight:600;text-decoration:underline}
+/* Запись на консультацию */
+.bk-box{max-width:600px}
+.bk-h{font-size:.8125rem;font-weight:600;color:var(--ink2);margin:20px 0 8px}
+.bk-types{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.bk-type{text-align:left;border:1.5px solid var(--border);border-radius:14px;padding:14px;background:#fff;cursor:pointer;transition:all .15s}
+.bk-type b{display:block;font-size:.9375rem}
+.bk-type .pr{display:block;font-family:'Fraunces',Georgia,serif;font-size:1.5rem;font-weight:600;color:var(--gold-d);margin:2px 0 4px}
+.bk-type small{display:block;font-size:.75rem;color:var(--ink3);line-height:1.45}
+.bk-type.on{border-color:var(--acc);background:var(--sky);box-shadow:inset 0 0 0 1px var(--acc)}
+.bk-days{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 8px;scroll-snap-type:x proximity;scrollbar-width:thin}
+.bk-day{flex:0 0 62px;height:74px;border:1.5px solid var(--border);border-radius:12px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;scroll-snap-align:start;transition:all .15s}
+.bk-day .w,.bk-day .m{font-size:.6875rem;color:var(--ink3)}
+.bk-day .n{font-size:1.3rem;font-weight:600;line-height:1.15;font-variant-numeric:tabular-nums}
+.bk-day.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.bk-day.on .w,.bk-day.on .m{color:rgba(255,255,255,.8)}
+.bk-times{display:flex;flex-wrap:wrap;gap:8px}
+.bk-time{border:1.5px solid var(--border);border-radius:999px;padding:8px 16px;background:#fff;cursor:pointer;font-variant-numeric:tabular-nums;font-size:.9rem;transition:all .15s}
+.bk-time.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.bk-hint{font-size:.75rem;color:var(--ink3);margin-top:8px}
+.bk-msg{font-size:.875rem;color:var(--ink2);line-height:1.6;padding:6px 0}
+.bk-summary{margin:18px 0 12px;padding:12px 14px;border-left:3px solid var(--acc);background:var(--sky);border-radius:0 10px 10px 0;font-size:.875rem;line-height:1.5}
+.bk-alt{font-size:.8125rem;color:var(--ink2);border-top:1px solid var(--border);margin-top:16px;padding-top:14px;line-height:1.5}
+.bk-alt a{color:var(--acc);font-weight:600}
+.bk-err{color:#b91c1c;font-size:.8125rem;margin:10px 0 0;line-height:1.5}
+.bk-captcha{margin:4px 0 12px}
+.bk-spin{width:22px;height:22px;border-radius:50%;border:2.5px solid var(--sky2);border-top-color:var(--acc);animation:spin .8s linear infinite;display:inline-block;vertical-align:middle;margin-right:8px}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:480px){.bk-types{grid-template-columns:1fr}}
+@media(max-width:480px){.lead-box{padding:22px 18px;border-radius:16px}.lf-row{grid-template-columns:1fr}.lead-modal{align-items:flex-end;padding:0}.lead-box{border-radius:20px 20px 0 0;max-height:92svh}}
+.svc-progress{height:3px;border-radius:2px;background:var(--border);overflow:hidden;margin-top:6px;max-width:260px}
+.svc-progress i{display:block;height:100%;background:var(--acc);border-radius:2px;transition:width .25s,margin-left .25s}
+@media(max-width:768px){
+  .svc-slider{margin:0 -18px}
+}
+@media(max-width:600px){
+  .svc-grid{padding:6px 44px 18px;scroll-padding-left:44px;-webkit-mask-image:linear-gradient(to right,transparent,#000 38px,#000 calc(100% - 38px),transparent);mask-image:linear-gradient(to right,transparent,#000 38px,#000 calc(100% - 38px),transparent)}
+  .svc-grid .svc-card{flex-basis:236px}
+  .svc-arrow{width:40px;height:40px}
+  .svc-arrow.prev{left:4px}
+  .svc-arrow.next{right:4px}
+}
+.svc-card{background:var(--white);border-radius:var(--r);padding:22px 24px;box-shadow:var(--sh);border:1.5px solid transparent;transition:border-color .2s,transform .2s,box-shadow .2s;animation:qin .4s ease both}
+.svc-card:hover{border-color:var(--acc);transform:translateY(-3px);box-shadow:var(--sh2)}
+.svc-cat{font-size:.75rem;font-weight:600;color:var(--gold-d);margin-bottom:10px}
+.svc-name{font-family:'Fraunces',Georgia,serif;font-size:1rem;font-weight:600;margin-bottom:7px}
+.svc-desc{font-size:.8375rem;color:var(--ink2);line-height:1.65;margin-bottom:14px}
+
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+.filter-btn{font-size:.8125rem;font-weight:500;padding:6px 16px;border-radius:20px;border:1.5px solid var(--border);background:var(--white);color:var(--ink2);cursor:pointer;transition:all .15s}
+.filter-btn.active{background:var(--acc);color:#fff;border-color:var(--acc)}
+
+/* Why */
+.why-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px}
+.why-card{padding:26px;border-radius:var(--r);background:var(--white);border:1px solid var(--border);border-top:2px solid var(--gold)}
+.why-title{font-weight:600;margin-bottom:6px;font-size:.9375rem}
+.why-desc{font-size:.8375rem;color:var(--ink2);line-height:1.65}
+
+/* Steps */
+.steps-bg{padding:150px 0}
+.steps-wrap{display:grid;grid-template-columns:repeat(4,1fr);position:relative}
+.steps-wrap::before{content:'';position:absolute;top:27px;left:calc(12.5% + 16px);right:calc(12.5% + 16px);height:1px;background:rgba(255,255,255,.15)}
+.step-item{padding:0 16px;text-align:center;position:relative}
+.steps-wrap::before{background:linear-gradient(90deg,transparent,var(--gold),transparent)!important;opacity:.5}
+.step-num{width:54px;height:54px;border-radius:50%;background:var(--navy-grad);box-shadow:0 0 0 5px #fff,0 0 0 6px var(--gold);color:#fff;font-family:'Fraunces',Georgia,serif;font-size:1.2rem;font-weight:600;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;position:relative;z-index:1}
+.step-title{font-size:.9375rem;font-weight:600;color:var(--ink);margin-bottom:6px}
+.step-desc{font-size:.8125rem;color:var(--ink2);line-height:1.6}
+
+/* Contact */
+.contact-cta{max-width:560px;background:var(--sky);border-radius:20px;padding:44px;text-align:center}
+.contact-cta-note{font-size:.875rem;color:var(--ink2);margin-top:18px}
+.contact-cta-note a{text-decoration:underline;color:var(--acc);font-weight:600}
+
+/* Footer */
+footer{color:var(--ink2);padding:56px 0 24px;background:#F4F5F8;border-top:1px solid var(--border)}
+.footer-inner{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:40px}
+.footer-logo{margin-bottom:12px}
+.footer-logo img{height:44px;width:auto;display:block}
+.footer-col h4{font-size:.8125rem;font-weight:600;color:var(--ink);margin-bottom:14px}
+.footer-col a{display:block;font-size:.875rem;margin-bottom:8px;transition:color .15s}
+.footer-col a:hover{color:var(--acc)}
+.footer-bottom{border-top:1px solid var(--border);color:var(--ink3);padding-top:20px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.8rem}
+
+@media(max-width:860px){
+  .calc-grid{grid-template-columns:minmax(0,1fr)}
+  .calc-panel,.calc-result{min-width:0}
+  .calc-result{position:static}
+}
+@media(max-width:1024px){
+  .nav-links{gap:16px}
+  .hero{max-height:none}
+}
+@media(max-width:768px){
+  section{padding:64px 0}
+  .quiz-bg,.svc-bg,.steps-bg{padding:80px 0}
+  .wrap{padding:0 18px}
+  .nav-burger{display:flex}
+  .nav-links{position:absolute;top:60px;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;background:#fff;border-bottom:1px solid var(--border);box-shadow:0 12px 24px rgba(15,23,42,.08);padding:8px 18px 18px;transform:translateY(-8px);opacity:0;visibility:hidden;transition:opacity .2s,transform .2s,visibility .2s}
+  nav.open .nav-links{transform:none;opacity:1;visibility:visible}
+  .nav-links a:not(.btn-nav){display:block!important;padding:14px 0;font-size:1rem;border-bottom:1px solid var(--border)}
+  .nav-links .lang-sw{align-self:flex-start;margin:16px 0}
+  .nav-links .btn-nav{text-align:center;padding:12px}
+  .hero{height:auto;min-height:100svh;padding:110px 0 140px}
+  .hero-overlay{background:linear-gradient(180deg,rgba(14,24,46,.55),rgba(14,24,46,.8))}
+  .hero-sub{font-size:1rem;margin-bottom:28px}
+  .hero-cta{flex-direction:column;align-items:stretch}
+  .hero-cta a{justify-content:center;text-align:center}
+  .section-sub{margin-bottom:28px}
+  .quiz-q{font-size:1.25rem}
+  .res-title{font-size:1.45rem}
+  .cr-big{font-size:2.25rem}
+  .contact-cta{padding:28px 20px}
+  .contact-cta .btn-primary{width:100%;justify-content:center}
+  .footer-inner{gap:28px}
+  .steps-wrap{grid-template-columns:1fr 1fr;gap:28px 0}
+  .steps-wrap::before{display:none}
+  .footer-inner{grid-template-columns:1fr}
+  .quiz-card,.calc-panel,.calc-result{padding:22px}
+}
+@media(max-width:480px){
+  .steps-wrap{grid-template-columns:1fr}
+  .step-item{display:grid;grid-template-columns:54px 1fr;gap:4px 16px;text-align:left;align-items:start}
+  .step-num{margin:0;grid-row:span 2}
+  .step-title{margin-top:6px}
+  .seg button{flex:1 1 100%}
+  .quiz-card,.calc-panel,.calc-result{padding:18px;border-radius:16px}
+  .quiz-opt{padding:13px 14px;font-size:.9rem}
+  .income-in{max-width:none}
+  .display-lg{font-size:2.1rem}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .flow,.hero-sub,.hero-cta{opacity:1!important;transform:none!important}
+  .hero h1 .line span{transform:none}
+}
+</style>
+</head>
+<body id="body">
+<div id="bg-flow" aria-hidden="true"></div>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a class="logo" href="#"><img src="logo.webp" alt="MigrAll"></a>
+    <div class="nav-links">
+      <a href="#quiz" data-i18n="nav_quiz">Подбор ВНЖ</a>
+      <a href="#calc" data-i18n="nav_calc">Калькулятор</a>
+      <a href="#services" data-i18n="nav_services">Услуги</a>
+      <a href="#contact" data-i18n="nav_contact">Контакты</a>
+      <div class="lang-sw">
+        <button class="lang-btn active" onclick="setLang('ru')">RU</button>
+        <button class="lang-btn" onclick="setLang('en')">EN</button>
+      </div>
+      <a class="btn-nav js-book" target="_blank" rel="noopener" data-i18n="nav_cta">Записаться</a>
+    </div>
+    <button class="nav-burger" id="nav-burger" aria-label="Меню" aria-expanded="false" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="hero" data-bg="#EEF1F6">
+  <div class="hero-media" id="hero-media"></div>
+  <div class="hero-overlay"></div>
+  <div class="wrap hero-content">
+    <h1 class="display display-lg" id="hero-h1">
+      <span class="line"><span id="h1a"></span></span>
+      <span class="line"><span id="h1b"></span></span>
+      <span class="line"><span id="h1c"></span></span>
+    </h1>
+    <p class="hero-sub" id="hero-sub"></p>
+    <div class="hero-cta">
+      <a class="btn-primary js-book" target="_blank" rel="noopener" data-i18n="hero_cta1">Записаться на консультацию</a>
+      <a class="btn-ghost-white" href="#quiz" data-i18n="hero_cta2">Подобрать ВНЖ за минуту</a>
+    </div>
+  </div>
+  <div class="hero-dots" id="hero-dots"></div>
+</header>
+
+<!-- QUIZ -->
+<section class="quiz-bg" id="quiz" data-bg="#EEF1F6">
+  <div class="wrap">
+    <div>
+      <div class="section-tag" data-i18n="quiz_tag">Подбор ВНЖ</div>
+      <h2 class="display display-md section-title" data-i18n="quiz_title">Какой ВНЖ вам подходит?</h2>
+      <p class="section-sub" data-i18n="quiz_sub">Несколько коротких вопросов, и вы увидите, с какого варианта стоит начать и какая консультация нужна.</p>
+    </div>
+    <div class="quiz-card" id="quiz-card" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- CALCULATOR -->
+<section id="calc" data-bg="#ffffff">
+  <div class="wrap">
+    <div>
+      <div class="section-tag" data-i18n="calc_tag">Калькулятор</div>
+      <h2 class="display display-md section-title" data-i18n="calc_title">Сколько нужно дохода для визы</h2>
+      <p class="section-sub" data-i18n="calc_sub">Выберите страну, визу и состав семьи — посчитаем минимальный доход по правилам 2026 года.</p>
+    </div>
+    <div class="calc-grid">
+      <div class="calc-panel">
+        <div class="calc-field">
+          <div class="calc-label" data-i18n="calc_country">Страна</div>
+          <div class="seg" id="calc-country">
+            <button data-c="pt" class="on" data-i18n="c_pt">Португалия</button>
+            <button data-c="es" data-i18n="c_es">Испания</button>
+          </div>
+        </div>
+        <div class="calc-field">
+          <div class="calc-label" data-i18n="calc_visa">Виза</div>
+          <div class="seg" id="calc-visas"></div>
+        </div>
+        <div class="calc-field">
+          <div class="calc-label" data-i18n="calc_adults">Кто переезжает</div>
+          <div class="seg" id="calc-adults">
+            <button data-v="1" class="on" data-i18n="calc_alone">Я один</button>
+            <button data-v="2" data-i18n="calc_partner">С супругом / партнёром</button>
+          </div>
+        </div>
+        <div class="calc-field">
+          <div class="calc-label" data-i18n="calc_kids">Дети</div>
+          <div class="stepper">
+            <button type="button" onclick="calcKids(-1)" aria-label="−">−</button>
+            <output id="calc-kids-v">0</output>
+            <button type="button" onclick="calcKids(1)" aria-label="+">+</button>
+          </div>
+        </div>
+        <div class="calc-field">
+          <label class="calc-label" for="calc-income" style="display:block" data-i18n="calc_income">Ваш доход в месяц (необязательно)</label>
+          <div class="income-in"><input id="calc-income" type="number" inputmode="numeric" min="0" step="50" placeholder="3000"><span>€</span></div>
+        </div>
+      </div>
+      <div class="calc-result" id="calc-result"></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="svc-bg" id="services" data-bg="#F4F5F8">
+  <div class="wrap">
+    <div>
+      <div class="section-tag" data-i18n="svc_tag">Услуги</div>
+      <h2 class="display display-md section-title" data-i18n="svc_title">Чем мы можем помочь</h2>
+      <p class="section-sub" data-i18n="svc_sub">Мы оказываем консалтинговые и экспертные услуги. Работу с документами и государственными органами выполняют лицензированные адвокаты.</p>
+    </div>
+    <div class="filter-bar" id="filter-bar"></div>
+    <div class="svc-slider">
+      <button class="svc-arrow prev" id="svc-prev" aria-label="Назад" onclick="svcScroll(-1)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <div class="svc-grid" id="svc-grid"></div>
+      <button class="svc-arrow next" id="svc-next" aria-label="Вперёд" onclick="svcScroll(1)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+    </div>
+    <div class="svc-progress"><i id="svc-bar"></i></div>
+    <div class="svc-cta"><button class="btn-primary" type="button" onclick="openLead()" data-i18n="svc_req">Оставить заявку на услугу</button></div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section data-bg="#ffffff">
+  <div class="wrap">
+    <div>
+      <div class="section-tag" data-i18n="why_tag">Почему MigrAll</div>
+      <h2 class="display display-md section-title" style="margin-bottom:32px" data-i18n="why_title">Надёжный партнёр на каждом шаге</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-card"><div class="why-title" data-i18n="why1t">Экспертиза в визовой сфере более 16 лет</div><div class="why-desc" data-i18n="why1d">Каждый документ проверяется адвокатом перед подачей.</div></div>
+      <div class="why-card"><div class="why-title" data-i18n="why2t">Сервис</div><div class="why-desc" data-i18n="why2d">Мы всегда на связи: статус вашего дела всегда в актуальном состоянии, и мы честно озвучиваем все риски.</div></div>
+      <div class="why-card"><div class="why-title" data-i18n="why3t">Говорим на португальском, английском и русском</div><div class="why-desc" data-i18n="why3d">Объясняем бюрократию на понятном языке.</div></div>
+      <div class="why-card"><div class="why-title" data-i18n="why4t">Быстрые ответы</div><div class="why-desc" data-i18n="why4d">Стараемся оперативно отвечать на вопросы в рабочие часы и на срочные вопросы — по выходным.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- STEPS -->
+<section class="steps-bg" data-bg="#EEF1F6">
+  <div class="wrap">
+    <div>
+      <div class="section-tag" data-i18n="how_tag">Процесс</div>
+      <h2 class="display display-md section-title" style="margin-bottom:40px" data-i18n="how_title">Как мы работаем</h2>
+    </div>
+    <div class="steps-wrap" id="steps-wrap"></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" data-bg="#ffffff" style="padding-bottom:100px">
+  <div class="wrap">
+    <div>
+      <div class="section-tag" data-i18n="form_tag">Запись</div>
+      <h2 class="display display-md section-title" data-i18n="form_title">Начнём работу</h2>
+      <p class="section-sub" data-i18n="form_sub">Выберите формат консультации и удобное время — это займёт пару минут.</p>
+    </div>
+    <div class="contact-cta">
+      <a class="btn-primary js-book" target="_blank" rel="noopener" data-i18n="hero_cta1">Записаться на консультацию</a>
+      <p class="contact-cta-note"><span data-i18n="contact_alt_q">Есть вопрос по конкретной услуге?</span> <a href="https://t.me/MigrALLPT" target="_blank" rel="noopener" data-i18n="contact_alt_link">Напишите нам</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- ЗАПИСЬ НА КОНСУЛЬТАЦИЮ -->
+<div class="lead-modal" id="book-modal" role="dialog" aria-modal="true" aria-labelledby="bk-title" hidden>
+  <div class="lead-backdrop" onclick="closeBooking()"></div>
+  <div class="lead-box bk-box">
+    <button class="lead-close" type="button" onclick="closeBooking()" aria-label="Закрыть"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+    <div id="bk-body"></div>
+  </div>
+</div>
+
+<!-- ФОРМА ЗАЯВКИ НА УСЛУГУ -->
+<div class="lead-modal" id="lead-modal" role="dialog" aria-modal="true" aria-labelledby="lead-title" hidden>
+  <div class="lead-backdrop" onclick="closeLead()"></div>
+  <div class="lead-box">
+    <button class="lead-close" type="button" onclick="closeLead()" aria-label="Закрыть"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+    <div id="lead-body"></div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-inner">
+      <div><div class="footer-logo"><img src="logo.webp" alt="MigrAll"></div><div style="font-size:.875rem;max-width:240px" data-i18n="footer_desc">Иммиграционное агентство. Переезд в Португалию.</div></div>
+      <div class="footer-col"><h4 data-i18n="footer_svc">Услуги</h4><a href="#services" data-i18n="fs1">Сопровождение ВНЖ</a><a href="#services" data-i18n="fs2">Переводы</a><a href="#services" data-i18n="fs3">Консультации</a><a href="#services" data-i18n="fs4">Недвижимость</a></div>
+      <div class="footer-col"><h4 data-i18n="footer_ct">Контакты</h4><a href="https://t.me/MigrAll" target="_blank" rel="noopener">Telegram-канал</a><a href="https://t.me/MigrALLPT" target="_blank" rel="noopener" data-i18n="footer_req">Написать запрос</a><a href="https://www.instagram.com/migrallportugal" target="_blank" rel="noopener">Instagram</a></div>
+    </div>
+    <div class="footer-bottom"><span>© <span id="year">2026</span> MigrAll</span><span data-i18n="footer_copy">Консалтинговые услуги в иммиграционных процессах</span></div>
+  </div>
+</footer>
+<script>
+// ════════════════ Настройки ════════════════
+// Куда ведут все кнопки «Записаться». Когда подключим запись с оплатой — заменим на '/booking.html'
+const BOOKING_URL = 'https://t.me/my_appt_bot';
+
+// Куда отправляются заявки на услуги: адрес вашего сервера на Render + /api/lead
+// Пример: 'https://migrall-bot.onrender.com/api/lead'. Пока пусто — форма предложит написать в Telegram.
+const LEAD_ENDPOINT = '';
+const LEAD_FALLBACK = 'https://t.me/MigrALLPT';
+
+// Запись на консультацию с оплатой: адрес того же сервера на Render, БЕЗ /api на конце.
+// Пример: 'https://telegram-consultation-bot.onrender.com'. Пока пусто — кнопки «Записаться» ведут в Telegram-бота.
+const BOOKING_API = '';
+// Site key Cloudflare Turnstile, если капча включена на сервере (TURNSTILE_SECRET). Иначе оставьте пустым.
+const TURNSTILE_SITEKEY = '';
+
+// Ставки 2026 года — обновлять раз в год
+const RATES = {
+  PT_SMN: 920            // мин. зарплата Португалии, €/мес
+};
+
+// ════════════════ Данные стран ════════════════
+const U = (id, w) => `https://images.unsplash.com/${id}?w=${w}&q=80`;
+const COUNTRIES = {
+  pt: {
+    heroVideo: '', // можно положить hero-pt.mp4 в репозиторий и вписать сюда 'hero-pt.mp4'
+    heroImgs: ['photo-1555881400-74d7acaacd8b','photo-1548707309-dcebeab9ea9b','photo-1518609878373-06d740f60d8b','photo-1513735492246-483525079686'],
+    services: {
+      ru: [
+        {cat:'vnj',name:'Сопровождение (полный цикл)',desc:'Полное сопровождение от консультации до получения ВНЖ. Документы, запись в AIMA, присутствие на подаче.'},
+        {cat:'vnj',name:'Продление ВНЖ',desc:'Подготовка документов и сопровождение на процедуре продления ВНЖ.'},
+        {cat:'vnj',name:'Гражданство',desc:'Подготовка и подача заявления на португальское гражданство.'},
+        {cat:'docs',name:'NIF — налоговый номер',desc:'Получение португальского налогового идентификационного номера.'},
+        {cat:'docs',name:'NISS — социальный номер',desc:'Регистрация в системе социального страхования Португалии.'},
+        {cat:'docs',name:'Открытие банковского счёта',desc:'Сопровождение при открытии счёта в португальском банке.'},
+        {cat:'docs',name:'Справка о несудимости',desc:'Запрос, перевод и апостилирование справки из России или другой страны.'},
+        {cat:'docs',name:'Апостиль',desc:'Апостилирование документов для использования в Португалии и Европе.'},
+        {cat:'docs',name:'Переводы',desc:'Заверенные переводы документов на португальский и с португальского.'},
+        {cat:'consult',name:'Консультация',desc:'Индивидуальная консультация по вопросам иммиграции и жизни в Португалии.'},
+        {cat:'consult',name:'Консультация с бухгалтером',desc:'Налоговые вопросы, режим NHR и ведение бизнеса в Португалии.'},
+        {cat:'realty',name:'Сопровождение по аренде',desc:'Поиск и проверка жилья для аренды. Переговоры, проверка договора.'},
+        {cat:'realty',name:'Сопровождение по покупке',desc:'Юридическое сопровождение сделки купли-продажи недвижимости.'},
+        {cat:'realty',name:'Сопровождение по продаже',desc:'Юридическое сопровождение продажи недвижимости в Португалии.'},
+        {cat:'other',name:'Судебное сопровождение',desc:'Представление интересов в португальских судах лицензированными адвокатами.'}],
+      en: [
+        {cat:'vnj',name:'Full relocation package',desc:'Full support from consultation to residence permit. Documents, AIMA, appointment attendance.'},
+        {cat:'vnj',name:'Residence permit renewal',desc:'Document preparation and support at the renewal procedure.'},
+        {cat:'vnj',name:'Citizenship',desc:'Preparation and submission of Portuguese citizenship application.'},
+        {cat:'docs',name:'NIF — tax number',desc:'Obtaining a Portuguese tax identification number.'},
+        {cat:'docs',name:'NISS — social number',desc:'Registration in the Portuguese social security system.'},
+        {cat:'docs',name:'Bank account opening',desc:'Support in opening an account at a Portuguese bank.'},
+        {cat:'docs',name:'Police clearance certificate',desc:'Request, translation, and apostille of police clearance certificate.'},
+        {cat:'docs',name:'Apostille',desc:'Apostille of documents for use in Portugal and Europe.'},
+        {cat:'docs',name:'Translations',desc:'Certified translations of documents to and from Portuguese.'},
+        {cat:'consult',name:'Consultation',desc:'Individual consultation on immigration and life in Portugal.'},
+        {cat:'consult',name:'Accounting consultation',desc:'Tax questions, NHR regime, and business in Portugal.'},
+        {cat:'realty',name:'Rental support',desc:'Property search and verification. Negotiation and contract review.'},
+        {cat:'realty',name:'Property purchase support',desc:'Legal support for property purchase transaction.'},
+        {cat:'realty',name:'Property sale support',desc:'Legal support for selling property in Portugal.'},
+        {cat:'other',name:'Court representation',desc:'Legal representation in Portuguese courts by licensed lawyers.'}]
+    },
+    steps: {
+      ru: [{n:1,t:'Консультация',d:'Разбираем ситуацию и составляем план'},{n:2,t:'Документы',d:'Собираем, переводим, апостилируем'},{n:3,t:'Подача',d:'Сопровождаем в AIMA или консульстве'},{n:4,t:'Результат',d:'Получаете ВНЖ и поддержку в продлении'}],
+      en: [{n:1,t:'Consultation',d:'Analyse situation and build a plan'},{n:2,t:'Documents',d:'Collect, translate, apostille'},{n:3,t:'Submission',d:'Accompany at AIMA or consulate'},{n:4,t:'Result',d:'Receive residence permit and renewal support'}]
+    }
+  }
+};
+const FILTERS = {
+  ru:[{k:'all',l:'Все'},{k:'vnj',l:'ВНЖ'},{k:'docs',l:'Документы'},{k:'consult',l:'Консультации'},{k:'realty',l:'Недвижимость'},{k:'other',l:'Прочее'}],
+  en:[{k:'all',l:'All'},{k:'vnj',l:'Residence'},{k:'docs',l:'Documents'},{k:'consult',l:'Consultations'},{k:'realty',l:'Real estate'},{k:'other',l:'Other'}]
+};
+
+// ════════════════ Тексты ════════════════
+const T = {
+  ru:{
+    nav_quiz:'Подбор ВНЖ',nav_calc:'Калькулятор',nav_services:'Услуги',nav_contact:'Контакты',nav_cta:'Записаться',
+    h1a:'Ваш путь',h1b:'к жизни',h1c_pt:'в Португалии и Испании',
+    hero_sub_pt:'Помогаем переехать — от первой консультации до получения ВНЖ.',
+    hero_cta1:'Записаться на консультацию',hero_cta2:'Подобрать ВНЖ за минуту',
+    quiz_tag:'Подбор ВНЖ',quiz_title:'Какой ВНЖ вам подходит?',quiz_sub:'Несколько коротких вопросов, и вы увидите, с какого варианта стоит начать и какая консультация нужна.',
+    calc_tag:'Калькулятор',calc_title:'Сколько нужно дохода для визы',calc_sub:'Выберите страну, визу и состав семьи — посчитаем минимальный доход по правилам 2026 года.',
+    calc_country:'Страна',c_pt:'Португалия',c_es:'Испания',calc_visa:'Виза',calc_adults:'Кто переезжает',calc_alone:'Я один',calc_partner:'С супругом / партнёром',calc_kids:'Дети',calc_income:'Ваш доход в месяц (необязательно)',
+    svc_tag:'Услуги',svc_title:'Чем мы можем помочь',svc_sub:'Мы оказываем консалтинговые и экспертные услуги. Работу с документами и государственными органами выполняют лицензированные адвокаты.',svc_req:'Оставить заявку на услугу',
+    why_tag:'Почему MigrAll',why_title:'Надёжный партнёр на каждом шаге',
+    why1t:'Экспертиза в визовой сфере более 16 лет',why1d:'Каждый документ проверяется адвокатом перед подачей.',
+    why2t:'Сервис',why2d:'Мы всегда на связи: статус вашего дела всегда в актуальном состоянии, и мы честно озвучиваем все риски.',
+    why3t:'Говорим на португальском, английском и русском',why3d:'Объясняем бюрократию на понятном языке.',
+    why4t:'Быстрые ответы',why4d:'Стараемся оперативно отвечать на вопросы в рабочие часы и на срочные вопросы — по выходным.',
+    how_tag:'Процесс',how_title:'Как мы работаем',
+    form_tag:'Запись',form_title:'Начнём работу',form_sub:'Выберите формат консультации и удобное время — это займёт пару минут.',
+    contact_alt_q:'Есть вопрос по конкретной услуге?',contact_alt_link:'Напишите нам',
+    footer_desc:'Иммиграционное агентство. Переезд в Португалию.',footer_svc:'Услуги',footer_ct:'Контакты',footer_req:'Написать запрос',
+    footer_copy:'Консалтинговые услуги в иммиграционных процессах',fs1:'Сопровождение ВНЖ',fs2:'Переводы',fs3:'Консультации',fs4:'Недвижимость'
+  },
+  en:{
+    nav_quiz:'Find your visa',nav_calc:'Calculator',nav_services:'Services',nav_contact:'Contact',nav_cta:'Book now',
+    h1a:'Your path',h1b:'to life',h1c_pt:'in Portugal and Spain',
+    hero_sub_pt:'We help you relocate — from first consultation to residence permit.',
+    hero_cta1:'Book a consultation',hero_cta2:'Find your visa in a minute',
+    quiz_tag:'Visa finder',quiz_title:'Which residence permit fits you?',quiz_sub:'A few short questions, and you will see where to start and which consultation you need.',
+    calc_tag:'Calculator',calc_title:'How much income the visa requires',calc_sub:'Pick a country, visa and your family — we calculate the minimum income under 2026 rules.',
+    calc_country:'Country',c_pt:'Portugal',c_es:'Spain',calc_visa:'Visa',calc_adults:'Who is moving',calc_alone:'Just me',calc_partner:'With spouse / partner',calc_kids:'Children',calc_income:'Your monthly income (optional)',
+    svc_tag:'Services',svc_title:'How we can help',svc_sub:'We provide consulting and expert services. Work with documents and government authorities is carried out by licensed lawyers.',svc_req:'Request a service',
+    why_tag:'Why MigrAll',why_title:'A reliable partner at every step',
+    why1t:'16+ years of expertise in visa matters',why1d:'Every document is checked by a lawyer before submission.',
+    why2t:'Service',why2d:"We're always in touch: your case status is always up to date, and we openly share every risk.",
+    why3t:'We speak Portuguese, English and Russian',why3d:'We explain bureaucracy in plain language.',
+    why4t:'Fast responses',why4d:'We aim to respond promptly during business hours, and to urgent questions on weekends too.',
+    how_tag:'Process',how_title:'How we work',
+    form_tag:'Book',form_title:"Let's get started",form_sub:'Choose the consultation format and a convenient time — it takes a couple of minutes.',
+    contact_alt_q:'Have a question about a specific service?',contact_alt_link:'Message us',
+    footer_desc:'Immigration agency. Relocation to Portugal.',footer_svc:'Services',footer_ct:'Contact',footer_req:'Send a request',
+    footer_copy:'Consulting services in immigration processes',fs1:'Residence permit',fs2:'Translations',fs3:'Consultations',fs4:'Real estate'
+  }
+};
+
+// ════════════════ Состояние ════════════════
+let lang = 'ru', country = 'pt', currentFilter = 'all';
+const L = (ru, en) => lang === 'ru' ? ru : en;
+const fmt = n => Math.round(n).toLocaleString(lang === 'ru' ? 'ru-RU' : 'en-GB') + ' €';
+
+// ════════════════ Визы и расчёт ════════════════
+// c: 'pt' — показываются и в калькуляторе; 'es' — только в квизе
+const VISAS = {
+  pt_d7: {c:'pt', name:{ru:'D7 Пассивный доход',en:'D7 Passive income'}, hint:{ru:'пенсия, аренда, дивиденды',en:'pension, rent, dividends'}},
+  pt_d8: {c:'pt', name:{ru:'D8 Цифровой кочевник',en:'D8 Digital nomad'}, hint:{ru:'удалённая работа',en:'remote work'}},
+  es_dnv: {c:'es', name:{ru:'Виза цифрового кочевника',en:'Digital nomad visa'}, hint:{ru:'удалённая работа',en:'remote work'}},
+  es_nlv: {c:'es', name:{ru:'Не-лукратив (NLV)',en:'Non-lucrative visa (NLV)'}, hint:{ru:'пассивный доход, без работы',en:'passive income, no work'}}
+};
+const ES_SMI_M = 17094 / 12;   // SMI Испании 2026: 1 221 € × 14 / 12
+const ES_IPREM_M = 600;        // IPREM Испании 2026, €/мес
+
+// Возвращает { monthly, lines, balance, balanceLines }
+//  monthly — минимальный доход в месяц; balance — остаток на счёте (если нужен)
+function calcRequired(key, adults, kids){
+  const S = RATES.PT_SMN, sp = L('Супруг / партнёр','Spouse / partner'), ch = i => L('Ребёнок ','Child ') + (i+1);
+  const main = L('Основной заявитель','Main applicant');
+  if (key === 'pt_d7'){
+    const lines = [[main, S]];
+    if (adults === 2) lines.push([sp, S*.5]);
+    for (let i=0;i<kids;i++) lines.push([ch(i), S*.3]);
+    const monthly = lines.reduce((a,l)=>a+l[1],0);
+    return { monthly, lines, balance: monthly*12, balanceLines: null };
+  }
+  if (key === 'pt_d8'){
+    // Доход 4 × мин. зарплата — не зависит от состава семьи.
+    // При подаче с семьёй: остаток на счёте = (920 + 50% на супруга + 30% на каждого ребёнка) × 12
+    const base = S*4, family = adults === 2 || kids > 0;
+    let balance = null, balanceLines = null;
+    if (family){
+      balanceLines = [[main, S*12]];
+      if (adults === 2) balanceLines.push([sp, S*.5*12]);
+      for (let i=0;i<kids;i++) balanceLines.push([ch(i), S*.3*12]);
+      balance = balanceLines.reduce((a,l)=>a+l[1],0);
+    }
+    return { monthly: base, lines: [[main, base]], balance, balanceLines };
+  }
+  const deps = [];
+  if (adults === 2) deps.push(sp);
+  for (let i=0;i<kids;i++) deps.push(ch(i));
+  if (key === 'es_dnv'){
+    // 200% SMI; первый член семьи +75% SMI, каждый следующий +25% SMI
+    const lines = [[main, ES_SMI_M*2], ...deps.map((n,i)=>[n, ES_SMI_M*(i===0?.75:.25)])];
+    const monthly = lines.reduce((a,l)=>a+l[1],0);
+    return { monthly, lines, balance: null, balanceLines: null };
+  }
+  // es_nlv: 400% IPREM; каждый член семьи +100% IPREM; подтверждают сумму на год
+  const lines = [[main, ES_IPREM_M*4], ...deps.map(n=>[n, ES_IPREM_M])];
+  const monthly = lines.reduce((a,l)=>a+l[1],0);
+  return { monthly, lines, balance: monthly*12, balanceLines: null };
+}
+
+// ════════════════ Калькулятор ════════════════
+const calc = { country:'pt', visa:'pt_d7', adults:1, kids:0 };
+
+function renderCalcVisas(){
+  const keys = Object.keys(VISAS).filter(k => VISAS[k].c === calc.country);
+  if (!keys.includes(calc.visa)) calc.visa = keys[0];
+  document.querySelectorAll('#calc-country button').forEach(b => b.classList.toggle('on', b.dataset.c === calc.country));
+  document.getElementById('calc-visas').innerHTML = keys.map(k =>
+    `<button class="${k===calc.visa?'on':''}" onclick="calcVisa('${k}')">${VISAS[k].name[lang]}<small>${VISAS[k].hint[lang]}</small></button>`).join('');
+}
+function calcVisa(k){ calc.visa = k; renderCalcVisas(); renderCalc(); }
+function calcKids(d){ calc.kids = Math.max(0, Math.min(6, calc.kids + d)); document.getElementById('calc-kids-v').textContent = calc.kids; renderCalc(); }
+
+function renderCalc(){
+  const r = calcRequired(calc.visa, calc.adults, calc.kids), v = VISAS[calc.visa];
+  const inc = parseFloat(document.getElementById('calc-income').value);
+  const linesHTML = ls => `<div class="cr-lines">${ls.map(l=>`<div class="cr-line"><span>${l[0]}</span><b>${fmt(l[1])}</b></div>`).join('')}</div>`;
+  let bar = '', status = '';
+  if (inc > 0){
+    const ok = inc >= r.monthly, pct = Math.min(100, inc / r.monthly * 100);
+    bar = `<div class="cr-bar"><i style="width:${pct}%;background:${ok?'#6FCF97':'#D8B26E'}"></i></div>`;
+    status = ok
+      ? `<div class="cr-status ok">${L('Ваш доход проходит требование с запасом ','Your income meets the requirement with a margin of ')}${fmt(inc - r.monthly)}.</div>`
+      : `<div class="cr-status no">${L('Не хватает ','Short by ')}${fmt(r.monthly - inc)} ${L('в месяц. Разберём варианты на консультации.','a month. We can go through the options at a consultation.')}</div>`;
+  }
+  let body;
+  if (calc.visa === 'pt_d8'){
+    body = `<div class="cr-year">${L('Порог дохода не зависит от состава семьи','The income threshold does not depend on family size')}</div>` +
+      (r.balance
+        ? `<div class="cr-label" style="margin-top:4px">${L('Остаток на счёте при подаче с семьёй','Bank balance when applying with family')}</div>
+           <div class="cr-big" style="font-size:2rem">${fmt(r.balance)}</div>
+           <div class="cr-year">${L('920 € + 50% на супруга + 30% на каждого ребёнка, × 12 месяцев','€920 + 50% for spouse + 30% per child, × 12 months')}</div>
+           ${linesHTML(r.balanceLines)}`
+        : '');
+  } else if (r.balance){
+    body = `<div class="cr-year">${L('Остаток на счёте за год: ','Bank balance for a year: ')}${fmt(r.balance)}</div>${linesHTML(r.lines)}`;
+  } else {
+    body = `<div class="cr-year">${L('За год: ','Per year: ')}${fmt(r.monthly*12)}</div>${linesHTML(r.lines)}`;
+  }
+  document.getElementById('calc-result').innerHTML = `
+    <div class="cr-label">${L('Минимальный доход','Minimum income')}, ${v.name[lang]}</div>
+    <div class="cr-big">${fmt(r.monthly)} <small>${L('в месяц','/ month')}</small></div>
+    ${body}${bar}${status}
+    <a class="btn-primary js-book" href="${BOOKING_URL}" target="_blank" rel="noopener">${L('Обсудить мой случай','Discuss my case')}</a>
+    <div class="cr-note">${L('Расчёт по ставкам 2026 года: Португалия — минимальная зарплата 920 €; Испания — SMI 1 221 € × 14, IPREM 600 €. Консульство может запросить больше, это ориентир, а не юридическое заключение.','Based on 2026 rates: Portugal minimum wage €920; Spain SMI €1,221 × 14, IPREM €600. The consulate may ask for more; this is guidance, not legal advice.')}</div>`;
+}
+
+// ════════════════ Квиз ════════════════
+const QUIZ = [
+  {id:'country', q:{ru:'Куда вы рассматриваете переезд?',en:'Where are you thinking of moving?'}, opts:[
+    {v:'pt',ru:'Португалия',en:'Portugal'},
+    {v:'es',ru:'Испания',en:'Spain'},
+    {v:'any',ru:'Пока не решили',en:'Not decided yet'}]},
+  {id:'src', q:{ru:'Какой у вас основной источник дохода?',en:'What is your main source of income?'}, opts:[
+    {v:'remote',ru:'Удалённая работа на иностранную компанию или клиентов',en:'Remote work for a foreign company or clients'},
+    {v:'passive',ru:'Пассивный доход: пенсия, аренда, дивиденды, вклады',en:'Passive income: pension, rent, dividends, savings'},
+    {v:'job',ru:'Хочу найти работу в стране',en:'I want to find a job there'},
+    {v:'biz',ru:'Хочу открыть свой бизнес',en:'I want to start a business'},
+    {v:'none',ru:'Сейчас нет дохода',en:'No income at the moment'}]},
+  {id:'inc', q:{ru:'Какой у вас доход в месяц?',en:'What is your monthly income?'}, skipIf:a=>!['remote','passive'].includes(a.src), opts:[
+    {v:800,ru:'До 900 €',en:'Up to €900'},
+    {v:1700,ru:'900 – 2 400 €',en:'€900 – 2,400'},
+    {v:2600,ru:'2 400 – 2 850 €',en:'€2,400 – 2,850'},
+    {v:3300,ru:'2 850 – 3 700 €',en:'€2,850 – 3,700'},
+    {v:4500,ru:'Больше 3 700 €',en:'More than €3,700'}]},
+  {id:'fam', q:{ru:'Кто переезжает вместе с вами?',en:'Who is moving with you?'}, opts:[
+    {v:'1-0',ru:'Только я',en:'Just me'},
+    {v:'2-0',ru:'Я и супруг / партнёр',en:'Me and my spouse / partner'},
+    {v:'2-1',ru:'Семья с детьми',en:'Family with children'},
+    {v:'1-1',ru:'Я и ребёнок',en:'Me and my child'}]},
+  {id:'eu', q:{ru:'Есть ли у вашего супруга гражданство ЕС?',en:'Does your spouse hold EU citizenship?'}, skipIf:a=>a.fam && a.fam.startsWith('1'), opts:[
+    {v:'yes',ru:'Да',en:'Yes'},
+    {v:'no',ru:'Нет',en:'No'}]}
+];
+let qa = {}, qStep = 0;
+function visibleQuestions(){ return QUIZ.filter(q => !(q.skipIf && q.skipIf(qa))); }
+
+function renderQuiz(){
+  const card = document.getElementById('quiz-card'), qs = visibleQuestions();
+  if (qStep >= qs.length){ renderQuizResult(); return; }
+  const q = qs[qStep];
+  card.innerHTML = `<div class="quiz-anim">
+    <div class="quiz-progress">${qs.map((_,i)=>`<span class="${i<=qStep?'on':''}"></span>`).join('')}</div>
+    <div class="quiz-step">${L('Вопрос','Question')} ${qStep+1} ${L('из','of')} ${qs.length}</div>
+    <div class="quiz-q">${q.q[lang]}</div>
+    <div class="quiz-opts">${q.opts.map(o=>`<button class="quiz-opt" onclick="quizAnswer('${q.id}','${o.v}')">${o[lang]}</button>`).join('')}</div>
+    ${qStep>0?`<button class="quiz-back" onclick="quizBack()">${L('Назад','Back')}</button>`:''}
+  </div>`;
+}
+function quizAnswer(id, v){ qa[id] = (id === 'inc') ? Number(v) : v; qStep++; renderQuiz(); }
+function quizBack(){ qStep = Math.max(0, qStep - 1); renderQuiz(); }
+function quizRestart(){ qa = {}; qStep = 0; renderQuiz(); }
+
+const CNAME = c => c === 'es' ? L('Испания','Spain') : L('Португалия','Portugal');
+
+// Результат: { country, title, why, visa?, ok?, need?, balance?, alt?, second? }
+function recommend(a){
+  const [adults, kids] = (a.fam || '1-0').split('-').map(Number);
+  const c = a.country, inc = a.inc || 0;
+  const need = k => calcRequired(k, adults, kids).monthly;
+  const pick = cands => {
+    const met = cands.filter(k => inc >= need(k)).sort((x,y)=>need(x)-need(y));
+    return met[0] || cands.slice().sort((x,y)=>need(x)-need(y))[0];
+  };
+  if (a.eu === 'yes') return { country:null,
+    title:L('ВНЖ члена семьи гражданина ЕС','EU family member residence'),
+    why:L('Если у супруга гражданство ЕС, это обычно самый простой путь: требований к доходу почти нет, а рассматривают быстрее. Детали зависят от страны и регистрации брака.',
+          'If your spouse is an EU citizen, this is usually the simplest route: almost no income requirement and faster processing. Details depend on the country and how the marriage is registered.')};
+
+  if (a.src === 'remote' || a.src === 'passive'){
+    const pool = a.src === 'remote'
+      ? (c==='pt'?['pt_d8']:c==='es'?['es_dnv']:['es_dnv','pt_d8'])
+      : (c==='pt'?['pt_d7']:c==='es'?['es_nlv']:['pt_d7','es_nlv']);
+    const k = pick(pool), r = calcRequired(k, adults, kids), ok = inc >= r.monthly;
+    const why = a.src === 'remote'
+      ? L('Виза для тех, кто работает удалённо на компании или клиентов за пределами страны. Доход подтверждают контрактами и выписками за последние месяцы.',
+          'For people working remotely for companies or clients outside the country. Income is proven with contracts and recent bank statements.')
+      : L('Виза для тех, кто живёт на стабильный пассивный доход и не планирует работать по найму в стране.',
+          'For people living on stable passive income who do not plan to take local employment.');
+    const alt = (!ok && k === 'pt_d8') ? L(' Если до порога не хватает, иногда подходит D7, но удалённый доход по ней принимают не всегда.',' Below the threshold, D7 can sometimes work, but remote income is not always accepted for it.') : '';
+    return { country:VISAS[k].c, title:VISAS[k].name[lang], why, visa:k, ok, need:r.monthly, balance:(k==='pt_d8'?r.balance:null), alt };
+  }
+
+  const es = c === 'es';
+  if (a.src === 'job') return es
+    ? { country:'es', title:L('Рабочая виза по найму','Employment visa'),
+        why:L('Нужен работодатель в Испании, который оформит разрешение на работу. Для высококвалифицированных специалистов есть упрощённый порядок.','You need a Spanish employer to obtain a work permit. Highly qualified professionals have a simplified route.')}
+    : { country:'pt', title:L('Виза для поиска работы','Job-seeker visa'),
+        why:L('Сейчас эту визу выдают только высококвалифицированным специалистам, и на данный момент подача по ней недоступна. На консультации разберём, какие варианты есть в вашей ситуации.','This visa is currently limited to highly qualified professionals, and applications are not open at the moment. At a consultation we will look at the options available in your situation.')};
+
+  const BIZ = es
+    ? { title:L('Виза предпринимателя','Entrepreneur visa'),
+        why:L('Для инновационного проекта с одобрением ENISA. Требования к бизнес-плану строгие, важно правильно его подготовить.','For an innovative project approved by ENISA. Business-plan requirements are strict, so preparation matters.')}
+    : { title:L('D2 Виза предпринимателя','D2 Entrepreneur visa'),
+        why:L('Для открытия компании или работы как самозанятый с португальскими клиентами. Понадобятся бизнес-план, средства на счёте и регистрация деятельности.','To open a company or work as self-employed with Portuguese clients. You will need a business plan, funds and registered activity.')};
+  if (a.src === 'biz') return { country: es?'es':'pt', ...BIZ };
+
+  // нет дохода: учёба + второй вариант — бизнес
+  const STUDY = es
+    ? { title:L('Студенческая виза','Student visa'),
+        why:L('Нужно зачисление на программу в Испании и средства на проживание: не меньше 600 € в месяц на весь срок учёбы.','You need enrolment in a Spanish programme and funds of at least €600 a month for the study period.')}
+    : { title:L('D4 Студенческая виза','D4 Student visa'),
+        why:L('Нужно зачисление в учебное заведение Португалии и средства на проживание. После учёбы можно перейти на другой ВНЖ.','You need enrolment in a Portuguese institution and living funds. After studies you can switch to another permit.')};
+  return { country: es?'es':'pt', ...STUDY, second: BIZ };
+}
+
+function renderQuizResult(){
+  const r = recommend(qa);
+  let box = '';
+  if (r.visa){
+    const famNote = r.balance
+      ? L(` При подаче с семьёй нужен остаток на счёте от <b>${fmt(r.balance)}</b>.`, ` When applying with family you need a bank balance of at least <b>${fmt(r.balance)}</b>.`)
+      : '';
+    const needTxt = r.visa === 'pt_d8'
+      ? L(`Нужен доход от <b>${fmt(r.need)}</b> в месяц, порог не зависит от состава семьи.`, `You need income of at least <b>${fmt(r.need)}</b> a month regardless of family size.`)
+      : L(`Для вашего состава семьи нужно от <b>${fmt(r.need)}</b> в месяц.`, `For your family the minimum is <b>${fmt(r.need)}</b> a month.`);
+    box = `<div class="res-box ${r.ok?'ok':'warn'}">${needTxt} ${r.ok ? L('По вашему ответу доход подходит.','Your income looks sufficient.') : L('По вашему ответу дохода может не хватить.','Your income may fall short.')}${famNote}${r.alt||''}</div>`;
+  }
+  const second = r.second ? `<div class="res-second"><div class="res-label">${L('Ещё один вариант','Another option')}</div><div class="res-title" style="font-size:1.25rem">${r.second.title}</div><p class="res-why" style="margin-bottom:0">${r.second.why}</p></div>` : '';
+  document.getElementById('quiz-card').innerHTML = `<div class="quiz-anim">
+    <div class="quiz-progress">${visibleQuestions().map(()=>'<span class="on"></span>').join('')}</div>
+    <div class="res-label">${L('Вам стоит начать с варианта','Your best starting point')}${r.country?', '+CNAME(r.country):''}</div>
+    <div class="res-title">${r.title}</div>
+    <p class="res-why">${r.why}</p>
+    ${box}${second}
+    <div class="consults">
+      <div class="consult">
+        <div class="consult-head"><span>${L('Вводная консультация','Intro consultation')}</span><b>60 €</b></div>
+        <p>${L('Ознакомительная: поможет быстро разобраться в теме и понять, с чего начать именно в вашем случае. Подходит, если ситуация без сложностей. Проводит менеджер проекта, 1 час.','An introduction: quickly understand the topic and where to start in your case. Best when the situation is straightforward. With a project manager, 1 hour.')}</p>
+        <a class="btn-primary js-book" data-type="intro" href="${BOOKING_URL}" target="_blank" rel="noopener">${L('Записаться на вводную','Book intro')}</a>
+      </div>
+      <div class="consult">
+        <div class="consult-head"><span>${L('Экспертная консультация','Expert consultation')}</span><b>120 €</b></div>
+        <p>${L('Если ситуация сложная: разберём все нюансы и варианты легализации и составим пошаговый план. Проводит основатель проекта, 1 час.','For complex situations: we go through every detail and legalisation option and build a step-by-step plan. With the founder, 1 hour.')}</p>
+        <a class="btn-primary js-book" data-type="consultation" href="${BOOKING_URL}" target="_blank" rel="noopener">${L('Записаться на экспертную','Book expert')}</a>
+      </div>
+    </div>
+    ${r.visa ? `<button class="res-restart" style="margin:0 18px 0 0" onclick="quizToCalc()">${L('Посчитать подробно в калькуляторе','See full calculation')}</button>` : ''}
+    <button class="res-restart" onclick="quizRestart()">${L('Пройти заново','Start over')}</button>
+    <div class="res-note" style="margin-top:14px">${L('Это ориентир по вашим ответам, а не юридическое заключение. Точный вариант подберём на консультации.','This is guidance based on your answers, not legal advice. We will confirm the right option at a consultation.')}</div>
+  </div>`;
+}
+function quizToCalc(){
+  const r = recommend(qa), [adults, kids] = (qa.fam || '1-0').split('-').map(Number);
+  calc.country = VISAS[r.visa].c; calc.visa = r.visa; calc.adults = adults; calc.kids = kids;
+  document.querySelectorAll('#calc-adults button').forEach(b => b.classList.toggle('on', Number(b.dataset.v) === calc.adults));
+  document.getElementById('calc-kids-v').textContent = calc.kids;
+  renderCalcVisas(); renderCalc();
+  document.getElementById('calc').scrollIntoView({behavior:'smooth'});
+}
+
+// ════════════════ Первый экран: слайдшоу или видео ════════════════
+let heroTimer = null, heroIdx = 0;
+function renderHero(){
+  const d = COUNTRIES[country], media = document.getElementById('hero-media'), dots = document.getElementById('hero-dots');
+  clearInterval(heroTimer);
+  if (d.heroVideo){
+    media.innerHTML = `<video autoplay muted loop playsinline poster="${U(d.heroImgs[0],1800)}"><source src="${d.heroVideo}" type="video/mp4"></video>`;
+    dots.innerHTML = ''; return;
+  }
+  media.innerHTML = d.heroImgs.map((id,i)=>`<div class="hero-slide${i===0?' on':''}" style="background-image:url('${U(id,1800)}')"></div>`).join('');
+  dots.innerHTML = d.heroImgs.map((_,i)=>`<button class="hero-dot${i===0?' on':''}" aria-label="${i+1}" onclick="heroGo(${i})"></button>`).join('');
+  heroIdx = 0;
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) heroTimer = setInterval(()=>heroGo(heroIdx+1), 6000);
+}
+function heroGo(i){
+  const slides = document.querySelectorAll('.hero-slide'), dots = document.querySelectorAll('.hero-dot');
+  if (!slides.length) return;
+  heroIdx = (i + slides.length) % slides.length;
+  slides.forEach((s,k)=>s.classList.toggle('on', k===heroIdx));
+  dots.forEach((s,k)=>{ s.classList.remove('on'); if(k===heroIdx){ void s.offsetWidth; s.classList.add('on'); } });
+}
+function renderHeroText(){
+  const t = T[lang];
+  document.getElementById('h1a').textContent = t.h1a;
+  document.getElementById('h1b').textContent = t.h1b;
+  document.getElementById('h1c').textContent = t['h1c_'+country];
+  document.getElementById('hero-sub').textContent = t['hero_sub_'+country];
+}
+
+// ════════════════ Галерея, услуги, шаги ════════════════
+function renderFilters(){
+  document.getElementById('filter-bar').innerHTML = FILTERS[lang].map(f =>
+    `<button class="filter-btn${f.k===currentFilter?' active':''}" onclick="filterSvc('${f.k}')">${f.l}</button>`).join('');
+}
+function renderSvcs(){
+  const svcs = COUNTRIES[country].services[lang];
+  const list = currentFilter === 'all' ? svcs : svcs.filter(s => s.cat === currentFilter);
+  document.getElementById('svc-grid').innerHTML = list.map((s,i)=>`
+    <div class="svc-card" style="animation-delay:${i*35}ms">
+      <div class="svc-cat">${(FILTERS[lang].find(f=>f.k===s.cat)||{}).l||""}</div><div class="svc-name">${s.name}</div><div class="svc-desc">${s.desc}</div>
+    </div>`).join('');
+  const g = document.getElementById('svc-grid');
+  g.style.scrollBehavior = 'auto'; g.scrollLeft = 0; g.style.scrollBehavior = '';
+  requestAnimationFrame(updateSlider);
+}
+function filterSvc(cat){ currentFilter = cat; renderFilters(); renderSvcs(); }
+function svcScroll(dir){
+  const g = document.getElementById('svc-grid'), card = g.querySelector('.svc-card');
+  if (!card) return;
+  const step = card.offsetWidth + 16;
+  const visible = Math.max(1, Math.floor((g.clientWidth - 128) / step));
+  g.scrollBy({left: dir * step * visible, behavior:'smooth'});
+}
+function updateSlider(){
+  const g = document.getElementById('svc-grid'), max = g.scrollWidth - g.clientWidth;
+  document.getElementById('svc-prev').disabled = g.scrollLeft <= 8;
+  document.getElementById('svc-next').disabled = g.scrollLeft >= max - 8;
+  const vis = g.scrollWidth ? g.clientWidth / g.scrollWidth : 1;
+  const bar = document.getElementById('svc-bar');
+  bar.style.width = (vis * 100) + '%';
+  bar.style.marginLeft = (max > 0 ? (g.scrollLeft / g.scrollWidth) * 100 : 0) + '%';
+  document.querySelector('.svc-progress').style.visibility = vis >= .999 ? 'hidden' : 'visible';
+}
+function initSlider(){
+  const g = document.getElementById('svc-grid');
+  g.addEventListener('scroll', () => requestAnimationFrame(updateSlider), {passive:true});
+  addEventListener('resize', updateSlider);
+  updateSlider();
+}
+function renderSteps(){
+  document.getElementById('steps-wrap').innerHTML = COUNTRIES[country].steps[lang].map(s=>
+    `<div class="step-item"><div class="step-num">${s.n}</div><div class="step-title">${s.t}</div><div class="step-desc">${s.d}</div></div>`).join('');
+}
+
+// ════════════════ Страна и язык ════════════════
+function renderAll(){
+  if (!document.querySelector('.hero-slide, .hero-media video')) renderHero();
+  renderHeroText(); renderFilters(); renderSvcs(); renderSteps();
+  renderCalcVisas(); renderCalc(); renderQuiz();
+}
+function setLang(l){
+  if (!document.getElementById('book-modal').hidden){ bkSaveForm(); setTimeout(renderBooking, 0); }
+  lang = l;
+  document.documentElement.lang = l;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.textContent === l.toUpperCase()));
+  document.querySelectorAll('[data-i18n]').forEach(el => { const k = el.dataset.i18n; if (T[l][k]) el.textContent = T[l][k]; });
+  renderAll();
+}
+
+// ════════════════ Перетекание блоков при прокрутке ════════════════
+// Каждый блок проявляется, когда входит снизу, и растворяется, уходя наверх
+function initFlow(){
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const els = [...document.querySelectorAll('section > .wrap, footer > .wrap')];
+  els.forEach(e => e.classList.add('flow'));
+  const heroC = document.querySelector('.hero-content'), hero = document.getElementById('hero');
+  const clamp = v => Math.max(0, Math.min(1, v));
+  let ticking = false;
+  function update(){
+    ticking = false;
+    const vh = innerHeight, band = vh * .38;
+    const atEnd = scrollY + vh >= document.documentElement.scrollHeight - 40;
+    els.forEach(el => {
+      const r = el.getBoundingClientRect();
+      // у конца страницы нижние блоки не могут подняться выше — показываем их полностью
+      const fin = atEnd && r.top < vh ? 1 : clamp((vh - r.top) / band);
+      const fout = clamp((r.bottom - 60) / band);
+      const o = Math.min(fin, fout);
+      el.style.opacity = o.toFixed(3);
+      el.style.transform = `translateY(${((1 - fin) * 40 - (1 - fout) * 24).toFixed(1)}px)`;
+    });
+    const hp = clamp(scrollY / (hero.offsetHeight * .7));
+    heroC.style.opacity = (1 - hp).toFixed(3);
+    heroC.style.transform = `translateY(${(hp * -40).toFixed(1)}px)`;
+  }
+  addEventListener('scroll', () => { if (!ticking){ ticking = true; requestAnimationFrame(update); } }, {passive:true});
+  addEventListener('resize', update);
+  update();
+}
+
+// ════════════════ Цвет фона перетекает из блока в блок ════════════════
+function initBgFlow(){
+  const blocks = [...document.querySelectorAll('[data-bg]')];
+  const bg = document.getElementById('bg-flow');
+  const hex = h => [1,3,5].map(i => parseInt(h.slice(i,i+2),16));
+  const cols = blocks.map(b => hex(b.dataset.bg));
+  const clamp = v => Math.max(0, Math.min(1, v));
+  let ticking = false;
+  function update(){
+    ticking = false;
+    const vh = innerHeight, mid = vh * .55, zone = vh * .6;
+    let c = cols[0].slice();
+    for (let k = 1; k < blocks.length; k++){
+      const edge = blocks[k].getBoundingClientRect().top;      // граница между блоками
+      const p = clamp((mid - (edge - zone/2)) / zone);           // 0 → 1, пока граница проходит середину экрана
+      const e = p * p * (3 - 2 * p);                             // мягкое ускорение и замедление
+      c = c.map((v,i) => v + (cols[k][i] - v) * e);
+    }
+    const css = `rgb(${c.map(Math.round).join(',')})`;
+    bg.style.background = css;
+    document.documentElement.style.setProperty('--flow-bg', css);
+  }
+  addEventListener('scroll', () => { if (!ticking){ ticking = true; requestAnimationFrame(update); } }, {passive:true});
+  addEventListener('resize', update);
+  update();
+}
+
+// ════════════════ Анимации при прокрутке ════════════════
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+}, {threshold:.15});
+
+// ════════════════ Заявка на услугу ════════════════
+const lead = { country:'pt', via:'telegram' };
+let leadLastFocus = null;
+const esc = t => String(t).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+function leadServiceOptions(){
+  const svcs = COUNTRIES.pt.services[lang];
+  return FILTERS[lang].filter(f => f.k !== 'all').map(f => {
+    const items = svcs.filter(s => s.cat === f.k);
+    return items.length ? `<optgroup label="${esc(f.l)}">${items.map(s=>`<option>${esc(s.name)}</option>`).join('')}</optgroup>` : '';
+  }).join('') + `<option>${L('Другое / не знаю, что выбрать','Other / not sure')}</option>`;
+}
+
+function renderLeadForm(prev = {}){
+  const via = [['telegram','Telegram'],['whatsapp','WhatsApp'],['phone',L('Звонок','Phone call')],['email','Email']];
+  document.getElementById('lead-body').innerHTML = `
+    <div class="lead-title" id="lead-title">${L('Заявка на услугу','Service request')}</div>
+    <p class="lead-sub">${L('Выберите услугу и оставьте контакт. Ответим в рабочее время и уточним детали.','Pick a service and leave your contact. We will reply during business hours to clarify the details.')}</p>
+    <form id="lead-form" novalidate>
+      <div class="lf"><label>${L('Страна','Country')}</label>
+        <div class="lf-chips" id="lf-country">
+          <button type="button" data-v="pt" class="${lead.country==='pt'?'on':''}">${L('Португалия','Portugal')}</button>
+          <button type="button" data-v="es" class="${lead.country==='es'?'on':''}">${L('Испания','Spain')}</button>
+        </div></div>
+      <div class="lf" id="lf-service"><label for="lf-svc">${L('Услуга','Service')}</label>
+        <select id="lf-svc" name="service" required><option value="">${L('Выберите услугу','Choose a service')}</option>${leadServiceOptions()}</select>
+        <div class="err-msg">${L('Выберите услугу','Please choose a service')}</div></div>
+      <div class="lf" id="lf-name-w"><label for="lf-name">${L('Как к вам обращаться','Your name')}</label>
+        <input id="lf-name" name="name" autocomplete="name" maxlength="80" required value="${esc(prev.name||'')}">
+        <div class="err-msg">${L('Укажите имя','Please enter your name')}</div></div>
+      <div class="lf"><label>${L('Как с вами связаться','Preferred contact')}</label>
+        <div class="lf-chips" id="lf-via">${via.map(([v,t])=>`<button type="button" data-v="${v}" class="${lead.via===v?'on':''}">${t}</button>`).join('')}</div></div>
+      <div class="lf" id="lf-contact-w"><label for="lf-contact" id="lf-contact-l"></label>
+        <input id="lf-contact" name="contact" maxlength="120" required value="${esc(prev.contact||'')}">
+        <div class="err-msg">${L('Укажите контакт для связи','Please enter a contact')}</div></div>
+      <div class="lf"><label for="lf-msg">${L('Комментарий (необязательно)','Comment (optional)')}</label>
+        <textarea id="lf-msg" name="message" maxlength="1500" placeholder="${L('Кратко опишите ситуацию или вопрос','Briefly describe your situation or question')}">${esc(prev.message||'')}</textarea></div>
+      <div class="lf-hp" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
+      <label class="lf-consent" id="lf-consent-w"><input type="checkbox" id="lf-consent" required><span>${L('Согласен на обработку персональных данных для ответа на заявку','I agree to the processing of my personal data to handle this request')}</span></label>
+      <div id="lf-fail"></div>
+      <button class="btn-primary" type="submit" id="lf-submit">${L('Отправить заявку','Send request')}</button>
+    </form>`;
+  if (prev.service) document.getElementById('lf-svc').value = prev.service;
+  updateContactField();
+  document.querySelectorAll('#lf-country button').forEach(b => b.onclick = () => { lead.country = b.dataset.v; document.querySelectorAll('#lf-country button').forEach(x=>x.classList.toggle('on', x===b)); });
+  document.querySelectorAll('#lf-via button').forEach(b => b.onclick = () => { lead.via = b.dataset.v; document.querySelectorAll('#lf-via button').forEach(x=>x.classList.toggle('on', x===b)); updateContactField(); });
+  document.getElementById('lead-form').addEventListener('submit', submitLead);
+}
+function updateContactField(){
+  const m = {
+    telegram:[L('Ваш Telegram','Your Telegram'),'@username','text'],
+    whatsapp:[L('Номер WhatsApp','WhatsApp number'),'+351 900 000 000','tel'],
+    phone:[L('Номер телефона','Phone number'),'+351 900 000 000','tel'],
+    email:['Email','name@example.com','email']}[lead.via];
+  document.getElementById('lf-contact-l').textContent = m[0];
+  const i = document.getElementById('lf-contact'); i.placeholder = m[1]; i.type = m[2];
+  i.autocomplete = m[2] === 'email' ? 'email' : (m[2] === 'tel' ? 'tel' : 'off');
+}
+function validContact(v){
+  v = v.trim();
+  if (lead.via === 'email') return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+  if (lead.via === 'telegram') return /^@?[A-Za-z0-9_]{4,32}$/.test(v) || /^\+?[\d\s()-]{7,20}$/.test(v);
+  return /^\+?[\d\s()-]{7,20}$/.test(v);
+}
+async function submitLead(e){
+  e.preventDefault();
+  const f = e.target, get = id => document.getElementById(id);
+  const data = { country:lead.country, service:get('lf-svc').value, name:get('lf-name').value.trim(),
+    via:lead.via, contact:get('lf-contact').value.trim(), message:get('lf-msg').value.trim(),
+    website:f.website.value, lang, page:location.href };
+  let bad = false;
+  const mark = (id, cond) => { get(id).classList.toggle('err', cond); bad = bad || cond; };
+  mark('lf-service', !data.service);
+  mark('lf-name-w', data.name.length < 2);
+  mark('lf-contact-w', !validContact(data.contact));
+  if (!get('lf-consent').checked){ get('lf-consent-w').style.color = '#b91c1c'; bad = true; } else get('lf-consent-w').style.color = '';
+  if (bad){ const first = f.querySelector('.err input, .err select'); if (first) first.focus(); return; }
+  if (data.website) return; // бот заполнил скрытое поле
+
+  if (!LEAD_ENDPOINT){ showLeadFallback(data); return; }
+  const btn = get('lf-submit'); btn.disabled = true; btn.textContent = L('Отправляем…','Sending…');
+  const slow = setTimeout(() => { btn.textContent = L('Сервер просыпается, ещё немного…','Waking up the server, almost there…'); }, 6000);
+  try {
+    const ctrl = new AbortController(), t = setTimeout(() => ctrl.abort(), 75000);
+    const r = await fetch(LEAD_ENDPOINT, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data), signal:ctrl.signal });
+    clearTimeout(t);
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    showLeadDone(data);
+  } catch(err){
+    showLeadFallback(data, true);
+  } finally { clearTimeout(slow); }
+}
+function leadText(d){
+  return `${L('Заявка на услугу','Service request')}\n${L('Страна','Country')}: ${d.country==='es'?L('Испания','Spain'):L('Португалия','Portugal')}\n${L('Услуга','Service')}: ${d.service}\n${L('Имя','Name')}: ${d.name}\n${L('Контакт','Contact')} (${d.via}): ${d.contact}${d.message?`\n${L('Комментарий','Comment')}: ${d.message}`:''}`;
+}
+function showLeadFallback(d, failed){
+  const box = document.getElementById('lf-fail'), btn = document.getElementById('lf-submit');
+  btn.disabled = false; btn.textContent = L('Отправить заявку','Send request');
+  box.innerHTML = `<div class="lead-fail">${failed ? L('Не получилось отправить заявку автоматически.','We could not send the request automatically.') : L('Онлайн-отправка ещё не подключена.','Online sending is not connected yet.')}
+    ${L('Скопируйте текст заявки и отправьте его нам в','Copy your request and send it to us on')} <a href="${LEAD_FALLBACK}" target="_blank" rel="noopener">Telegram</a>.
+    <div style="margin-top:8px"><button type="button" class="btn-ghost" style="padding:8px 14px;font-size:.8125rem" id="lf-copy">${L('Скопировать заявку','Copy request')}</button></div></div>`;
+  document.getElementById('lf-copy').onclick = async () => {
+    try { await navigator.clipboard.writeText(leadText(d)); document.getElementById('lf-copy').textContent = L('Скопировано','Copied'); } catch(e){}
+  };
+}
+function showLeadDone(d){
+  document.getElementById('lead-body').innerHTML = `<div class="lead-done">
+    <div class="ok-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+    <div class="lead-title" style="margin:0 0 8px">${L('Заявка отправлена','Request sent')}</div>
+    <p class="lead-sub">${L('Мы получили вашу заявку на услугу','We have received your request for')} «${esc(d.service)}» ${L('и свяжемся с вами в рабочее время.','and will contact you during business hours.')}</p>
+    <button class="btn-primary" type="button" onclick="closeLead()">${L('Готово','Done')}</button></div>`;
+}
+function openLead(){
+  leadLastFocus = document.activeElement;
+  renderLeadForm();
+  const m = document.getElementById('lead-modal'); m.hidden = false;
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => document.getElementById('lf-svc').focus(), 50);
+}
+function closeLead(){
+  document.getElementById('lead-modal').hidden = true;
+  document.body.style.overflow = '';
+  if (leadLastFocus) leadLastFocus.focus();
+}
+document.addEventListener('keydown', e => {
+  const m = document.getElementById('lead-modal');
+  if (m.hidden) return;
+  if (e.key === 'Escape') closeLead();
+  if (e.key === 'Tab'){ // держим фокус внутри окна
+    const f = [...m.querySelectorAll('button,input:not([tabindex="-1"]),select,textarea,a')].filter(x => x.offsetParent);
+    if (!f.length) return;
+    if (e.shiftKey && document.activeElement === f[0]){ e.preventDefault(); f[f.length-1].focus(); }
+    else if (!e.shiftKey && document.activeElement === f[f.length-1]){ e.preventDefault(); f[0].focus(); }
+  }
+});
+
+// ════════════════ Запись на консультацию с оплатой ════════════════
+const bk = { type:'intro', slots:[], day:null, slot:null, price:60, hold:30, busy:false, view:'form', ref:null,
+             form:{ name:'', email:'', tg:'', comment:'', consent:false }, captcha:'', captchaId:null, poll:null };
+const BK_PRICE = { intro:60, consultation:120 };
+let bkLastFocus = null;
+
+const bkTypeName = t => t === 'intro' ? L('Вводная консультация','Intro consultation') : L('Экспертная консультация','Expert consultation');
+function bkDateFmt(opts, y, m, d){ return new Intl.DateTimeFormat(lang==='en'?'en-GB':'ru-RU', Object.assign({timeZone:'UTC'}, opts)).format(new Date(Date.UTC(y, m-1, d))); }
+// "07.10.2026, 10:00" (время Лиссабона) → момент времени
+function bkInstant(v){
+  const m = v.match(/^(\d{2})\.(\d{2})\.(\d{4}), (\d{2}):(\d{2})$/); if (!m) return null;
+  const guess = Date.UTC(+m[3], +m[2]-1, +m[1], +m[4], +m[5]);
+  const p = new Intl.DateTimeFormat('en-US',{timeZone:'Europe/Lisbon',hourCycle:'h23',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}).formatToParts(new Date(guess));
+  const g = t => +p.find(x => x.type === t).value;
+  return new Date(guess - (Date.UTC(g('year'), g('month')-1, g('day'), g('hour'), g('minute')) - guess));
+}
+function bkLocal(v){
+  try {
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    if (!tz || ['Europe/Lisbon','Europe/London','Atlantic/Madeira'].includes(tz)) return '';
+    const i = bkInstant(v); if (!i) return '';
+    return ` (${L('у вас','your time')}: ${new Intl.DateTimeFormat(lang==='en'?'en-GB':'ru-RU',{weekday:'short',hour:'2-digit',minute:'2-digit'}).format(i)})`;
+  } catch(e){ return ''; }
+}
+function bkLong(v){
+  const m = (v||'').match(/^(\d{2})\.(\d{2})\.(\d{4}), (\d{2}:\d{2})$/); if (!m) return v || '';
+  return bkDateFmt({weekday:'long', day:'numeric', month:'long'}, +m[3], +m[2], +m[1]) + ', ' + m[4];
+}
+const BK_ERR = () => ({
+  slot: L('Выберите день и время.','Choose a day and time.'),
+  name_required: L('Укажите имя и фамилию.','Enter your full name.'),
+  email_invalid: L('Проверьте email: на него придёт ссылка на встречу.','Check your email: the meeting link is sent there.'),
+  consent_required: L('Отметьте согласие на обработку данных.','Tick the data processing consent.'),
+  slot_taken: L('Это время только что заняли. Выберите другое.','Someone just took this time. Choose another one.'),
+  rate_limited: L('Слишком много попыток. Попробуйте позже или запишитесь через Telegram-бота.','Too many attempts. Try later or book through the Telegram bot.'),
+  captcha_failed: L('Подтвердите, что вы не робот, и нажмите оплату ещё раз.','Please complete the robot check and try again.'),
+  busy: L('Сейчас слишком много незавершённых оплат. Попробуйте через несколько минут.','Too many unfinished payments right now. Try again in a few minutes.'),
+  generic: L('Не удалось перейти к оплате. Попробуйте ещё раз или запишитесь через Telegram-бота.','Could not open payment. Try again or book through the Telegram bot.')
+});
+
+function openBooking(type){
+  if (!BOOKING_API){ window.open(BOOKING_URL, '_blank', 'noopener'); return; }
+  bkLastFocus = document.activeElement;
+  if (type && BK_PRICE[type]) { if (bk.type !== type){ bk.day = null; bk.slot = null; } bk.type = type; }
+  bk.view = 'form';
+  document.getElementById('book-modal').hidden = false;
+  document.body.style.overflow = 'hidden';
+  renderBooking(); bkLoadSlots();
+}
+function closeBooking(){
+  bkSaveForm();
+  clearTimeout(bk.poll);
+  document.getElementById('book-modal').hidden = true;
+  document.body.style.overflow = '';
+  if (bk.view === 'status' && location.search.includes('booking=')) history.replaceState(null, '', location.pathname + location.hash);
+  if (bkLastFocus) bkLastFocus.focus();
+}
+function bkSaveForm(){
+  const g = id => document.getElementById(id);
+  if (!g('bk-name')) return;
+  bk.form = { name:g('bk-name').value, email:g('bk-email').value, tg:g('bk-tg').value, comment:g('bk-comment').value, consent:g('bk-consent').checked };
+}
+
+function renderBooking(){
+  const body = document.getElementById('bk-body');
+  if (bk.view === 'status') return bkRenderStatus();
+  const f = bk.form;
+  body.innerHTML = `
+    <div class="lead-title" id="bk-title">${L('Запись на консультацию','Book a consultation')}</div>
+    <p class="lead-sub">${L('Онлайн в Google Meet, 1 час. Ссылка на встречу придёт на почту сразу после оплаты.','Online via Google Meet, 1 hour. The meeting link is emailed right after payment.')}</p>
+    <div class="bk-types">
+      ${['intro','consultation'].map(t => `<button type="button" class="bk-type ${bk.type===t?'on':''}" data-t="${t}" aria-pressed="${bk.type===t}">
+        <b>${bkTypeName(t)}</b><span class="pr">${BK_PRICE[t]} €</span>
+        <small>${t==='intro' ? L('Ознакомительная: разбор ситуации и первые шаги. Проводит менеджер проекта.','Introductory: your situation and first steps. With a project manager.')
+                              : L('Для сложных ситуаций: подробный план с документами. Проводит основатель.','For complex cases: a detailed plan with documents. With the founder.')}</small></button>`).join('')}
+    </div>
+    <div id="bk-schedule"></div>
+    <div class="bk-h">${L('Ваши данные','Your details')}</div>
+    <div class="lf-row">
+      <div class="lf"><label for="bk-name">${L('Имя и фамилия','Full name')}</label><input id="bk-name" autocomplete="name" maxlength="100" value="${esc(f.name)}"></div>
+      <div class="lf"><label for="bk-email">${L('Email для приглашения','Email for the invite')}</label><input id="bk-email" type="email" autocomplete="email" maxlength="200" value="${esc(f.email)}"></div>
+    </div>
+    <div class="lf"><label for="bk-tg">${L('Telegram (необязательно)','Telegram (optional)')}</label><input id="bk-tg" placeholder="@username" maxlength="64" value="${esc(f.tg)}"></div>
+    <div class="lf"><label for="bk-comment">${L('Коротко о ситуации (необязательно)','Briefly, your situation (optional)')}</label><textarea id="bk-comment" maxlength="1000">${esc(f.comment)}</textarea></div>
+    <div class="lf-hp" aria-hidden="true"><label>Website<input id="bk-website" tabindex="-1" autocomplete="off"></label></div>
+    <label class="lf-consent"><input type="checkbox" id="bk-consent" ${f.consent?'checked':''}><span>${L('Согласен на обработку персональных данных для проведения консультации','I agree to the processing of my personal data for this consultation')}</span></label>
+    ${TURNSTILE_SITEKEY ? '<div class="bk-captcha" id="bk-captcha"></div>' : ''}
+    <div class="bk-summary" id="bk-summary"></div>
+    <button class="btn-primary" type="button" id="bk-pay"></button>
+    <p class="bk-err" id="bk-err" role="alert" hidden></p>
+    <p class="lead-note">${L(`Оплата картой, Apple Pay или Google Pay через Revolut. Время держим за вами ${bk.hold} минут.`, `Pay by card, Apple Pay or Google Pay via Revolut. We hold the time for ${bk.hold} minutes.`)}</p>
+    <p class="bk-alt">${L('Оплачиваете российской картой или криптовалютой?','Paying with a Russian card or crypto?')} <a href="${BOOKING_URL}" target="_blank" rel="noopener">${L('Запишитесь через Telegram-бота','Book through the Telegram bot')}</a></p>`;
+  body.querySelectorAll('.bk-type').forEach(b => b.onclick = () => {
+    if (bk.type === b.dataset.t) return;
+    bkSaveForm(); bk.type = b.dataset.t; bk.day = null; bk.slot = null; bk.price = BK_PRICE[bk.type];
+    renderBooking(); bkLoadSlots();
+  });
+  document.getElementById('bk-pay').onclick = bkSubmit;
+  bkRenderSchedule(); bkSummary(); bkCaptcha();
+}
+
+let bkSlotsReq = 0;
+function bkLoadSlots(){
+  const box = document.getElementById('bk-schedule'); if (!box) return;
+  const my = ++bkSlotsReq;
+  bk.loading = true; bk.loadError = false; bkRenderSchedule();
+  const slow = setTimeout(() => { const l = document.getElementById('bk-loading'); if (l) l.textContent = L('Сервер запускается, это может занять до минуты…','The server is waking up, this can take up to a minute…'); }, 4000);
+  fetch(`${BOOKING_API}/api/slots?type=${encodeURIComponent(bk.type)}`)
+    .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(d => {
+      if (my !== bkSlotsReq) return;
+      bk.slots = d.slots || []; bk.price = d.price_eur || BK_PRICE[bk.type]; bk.hold = d.hold_minutes || bk.hold;
+      if (bk.day && !bk.slots.some(s => s.date === bk.day)) bk.day = null;
+      if (bk.slot && !bk.slots.some(s => s.value === bk.slot)) bk.slot = null;
+      bk.loading = false; bkRenderSchedule(); bkSummary();
+    })
+    .catch(() => { if (my !== bkSlotsReq) return; bk.loading = false; bk.loadError = true; bkRenderSchedule(); })
+    .finally(() => clearTimeout(slow));
+}
+function bkRenderSchedule(){
+  const box = document.getElementById('bk-schedule'); if (!box) return;
+  const head = `<div class="bk-h">${L('День','Day')}</div>`;
+  if (bk.loading){ box.innerHTML = head + `<div class="bk-msg"><span class="bk-spin"></span><span id="bk-loading">${L('Загружаем свободное время…','Loading available times…')}</span></div>`; return; }
+  if (bk.loadError){ box.innerHTML = head + `<p class="bk-err">${L('Не удалось загрузить расписание.','Could not load the schedule.')} <a href="#" id="bk-retry" style="color:inherit;font-weight:600">${L('Повторить','Retry')}</a></p>`; document.getElementById('bk-retry').onclick = e => { e.preventDefault(); bkLoadSlots(); }; return; }
+  if (!bk.slots.length){ box.innerHTML = head + `<p class="bk-msg">${L('Свободного времени на ближайшие дни нет. Напишите нам в Telegram — подберём время.','No free times in the coming days. Message us on Telegram and we will find a time.')} <a href="${LEAD_FALLBACK}" target="_blank" rel="noopener" style="color:var(--acc);font-weight:600">Telegram</a></p>`; return; }
+  const days = [...new Set(bk.slots.map(s => s.date))];
+  if (!bk.day) bk.day = days[0];
+  box.innerHTML = head + `<div class="bk-days">${days.map(d => { const [y,m,dd] = d.split('-').map(Number);
+      return `<button type="button" class="bk-day ${d===bk.day?'on':''}" data-d="${d}" aria-pressed="${d===bk.day}"><span class="w">${bkDateFmt({weekday:'short'},y,m,dd)}</span><span class="n">${dd}</span><span class="m">${bkDateFmt({month:'short'},y,m,dd).replace('.','')}</span></button>`; }).join('')}</div>
+    <div class="bk-h">${L('Время по Лиссабону','Time in Lisbon')}</div>
+    <div class="bk-times">${bk.slots.filter(s => s.date === bk.day).map(s => `<button type="button" class="bk-time ${s.value===bk.slot?'on':''}" data-s="${esc(s.value)}" aria-pressed="${s.value===bk.slot}">${esc(s.time)}</button>`).join('')}</div>
+    <div class="bk-hint">${L('Запись открыта начиная с завтрашнего дня.','Booking opens from tomorrow.')}</div>`;
+  box.querySelectorAll('.bk-day').forEach(b => b.onclick = () => { bk.day = b.dataset.d; bk.slot = null; bkRenderSchedule(); bkSummary(); });
+  box.querySelectorAll('.bk-time').forEach(b => b.onclick = () => { bk.slot = b.dataset.s; bkRenderSchedule(); bkSummary(); bkErr(); });
+  const on = box.querySelector('.bk-day.on'); if (on) on.scrollIntoView({block:'nearest', inline:'nearest'});
+}
+function bkSummary(){
+  const s = document.getElementById('bk-summary'), p = document.getElementById('bk-pay'); if (!s) return;
+  s.textContent = bk.slot ? `${bkTypeName(bk.type)}, ${bkLong(bk.slot)} ${L('по Лиссабону','Lisbon time')}${bkLocal(bk.slot)}` : L('Выберите день и время','Choose a day and time');
+  p.textContent = bk.busy ? L('Переходим к оплате…','Opening payment…') : L(`Оплатить ${bk.price} €`, `Pay €${bk.price}`);
+  p.disabled = bk.busy;
+}
+function bkErr(code){ const e = document.getElementById('bk-err'); if (!e) return; if (!code){ e.hidden = true; return; } e.textContent = BK_ERR()[code] || BK_ERR().generic; e.hidden = false; }
+
+function bkCaptcha(){
+  if (!TURNSTILE_SITEKEY) return;
+  const draw = () => {
+    const box = document.getElementById('bk-captcha'); if (!box || !window.turnstile) return;
+    bk.captcha = '';
+    bk.captchaId = window.turnstile.render(box, { sitekey:TURNSTILE_SITEKEY, language:lang,
+      callback:t => bk.captcha = t, 'expired-callback':() => bk.captcha = '' });
+  };
+  if (window.turnstile) return draw();
+  window.__bkCaptcha = draw;
+  if (document.getElementById('bk-ts-js')) return;
+  const sc = document.createElement('script'); sc.id = 'bk-ts-js'; sc.async = true;
+  sc.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?onload=__bkCaptcha&render=explicit';
+  document.head.appendChild(sc);
+}
+
+function bkSubmit(){
+  bkErr(); bkSaveForm();
+  const f = bk.form;
+  if (!bk.slot) return bkErr('slot');
+  if (f.name.trim().length < 2) return bkErr('name_required');
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(f.email.trim())) return bkErr('email_invalid');
+  if (!f.consent) return bkErr('consent_required');
+  if (TURNSTILE_SITEKEY && !bk.captcha) return bkErr('captcha_failed');
+  bk.busy = true; bkSummary();
+  fetch(`${BOOKING_API}/api/book`, { method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ type:bk.type, slot:bk.slot, name:f.name.trim(), email:f.email.trim(),
+      telegram:f.tg.trim(), comment:f.comment.trim(), website:document.getElementById('bk-website').value,
+      consent:true, lang, captcha:bk.captcha, turnstile:bk.captcha, 'cf-turnstile-response':bk.captcha }) })
+    .then(r => r.json().catch(() => ({})).then(b => ({ ok:r.ok, b })))
+    .then(({ok, b}) => {
+      if (ok && b.checkout_url){ location.href = b.checkout_url; return; }
+      bk.busy = false; bkSummary(); bkErr(b.error || 'generic');
+      if (window.turnstile && bk.captchaId !== null) try { window.turnstile.reset(bk.captchaId); bk.captcha=''; } catch(e){}
+      if (b.error === 'slot_taken'){ bk.slot = null; bkLoadSlots(); }
+    })
+    .catch(() => { bk.busy = false; bkSummary(); bkErr('generic'); });
+}
+
+// После оплаты Revolut возвращает клиента на сайт с ?booking=<номер брони>
+function bkRenderStatus(){
+  const body = document.getElementById('bk-body');
+  const d = bk.status;
+  let html;
+  if (!d || d.state === 'pending' && !bk.stuck){
+    html = `<div class="lead-done"><div style="margin-bottom:14px"><span class="bk-spin" style="width:36px;height:36px;margin:0"></span></div>
+      <div class="lead-title" id="bk-title" style="margin:0 0 8px">${L('Проверяем оплату…','Checking your payment…')}</div>
+      <p class="lead-sub">${L('Обычно это занимает несколько секунд.','This usually takes a few seconds.')}</p></div>`;
+  } else if (d.state === 'confirmed'){
+    html = `<div class="lead-done"><div class="ok-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+      <div class="lead-title" id="bk-title" style="margin:0 0 8px">${L('Вы записаны','You are booked')}</div>
+      <p class="lead-sub">${esc(bkTypeName(d.type))}, ${esc(bkLong(d.slot))} ${L('по Лиссабону','Lisbon time')}${esc(bkLocal(d.slot))}.<br>
+      ${L('Приглашение со ссылкой на Google Meet отправлено на','The Google Meet invite was sent to')} ${esc(d.email||'')}. ${L('Если письма нет, проверьте «Спам».','If you cannot find it, check spam.')}</p>
+      <button class="btn-primary" type="button" onclick="closeBooking()">${L('Готово','Done')}</button></div>`;
+  } else if (d.state === 'pending'){
+    html = `<div class="lead-done"><div class="lead-title" id="bk-title" style="margin:0 0 8px">${L('Оплата пока не подтвердилась','Payment not confirmed yet')}</div>
+      <p class="lead-sub">${L('Если вы оплатили, обновите страницу через пару минут или напишите нам в','If you paid, refresh the page in a couple of minutes or message us on')} <a href="${LEAD_FALLBACK}" target="_blank" rel="noopener" style="color:var(--acc);font-weight:600">Telegram</a>.</p></div>`;
+  } else {
+    html = `<div class="lead-done"><div class="lead-title" id="bk-title" style="margin:0 0 8px">${L('Бронь снята','Booking released')}</div>
+      <p class="lead-sub">${L(`Оплата не поступила за ${d.hold_minutes||bk.hold} минут, и время освободилось. Если деньги списались, напишите нам в Telegram — разберёмся.`,`Payment did not arrive within ${d.hold_minutes||bk.hold} minutes, so the time was released. If you were charged, message us on Telegram.`)}</p>
+      <button class="btn-primary" type="button" onclick="bkAgain()">${L('Выбрать другое время','Choose another time')}</button></div>`;
+  }
+  body.innerHTML = html;
+}
+function bkAgain(){ history.replaceState(null, '', location.pathname + location.hash); bk.view = 'form'; bk.slot = null; renderBooking(); bkLoadSlots(); }
+function bkCheckReturn(){
+  const ref = new URLSearchParams(location.search).get('booking');
+  if (!ref || !BOOKING_API || !/^[a-z]-[0-9a-f]{6,32}$/i.test(ref)) return;
+  bk.view = 'status'; bk.ref = ref; bk.status = null; bk.stuck = false;
+  document.getElementById('book-modal').hidden = false; document.body.style.overflow = 'hidden';
+  renderBooking();
+  let tries = 0;
+  const poll = () => {
+    tries++;
+    fetch(`${BOOKING_API}/api/booking/${encodeURIComponent(ref)}`).then(r => r.json()).then(d => {
+      bk.status = d;
+      if (d.state === 'pending' && tries < 40){ bk.poll = setTimeout(poll, 3000); }
+      else if (d.state === 'pending'){ bk.stuck = true; }
+      renderBooking();
+    }).catch(() => { if (tries < 40) bk.poll = setTimeout(poll, 3000); });
+  };
+  poll();
+}
+
+// Все кнопки «Записаться» открывают запись (или Telegram-бота, пока сервер не подключён)
+document.addEventListener('click', e => {
+  const a = e.target.closest('.js-book'); if (!a || !BOOKING_API) return;
+  e.preventDefault(); toggleMenu(false); openBooking(a.dataset.type);
+});
+document.addEventListener('keydown', e => {
+  const m = document.getElementById('book-modal');
+  if (m.hidden) return;
+  if (e.key === 'Escape') closeBooking();
+  if (e.key === 'Tab'){
+    const f = [...m.querySelectorAll('button,input:not([tabindex="-1"]),select,textarea,a')].filter(x => x.offsetParent);
+    if (!f.length) return;
+    if (e.shiftKey && document.activeElement === f[0]){ e.preventDefault(); f[f.length-1].focus(); }
+    else if (!e.shiftKey && document.activeElement === f[f.length-1]){ e.preventDefault(); f[0].focus(); }
+  }
+});
+
+// ════════════════ Мобильное меню ════════════════
+function toggleMenu(force){
+  const nav = document.querySelector('nav'), open = force ?? !nav.classList.contains('open');
+  nav.classList.toggle('open', open);
+  document.getElementById('nav-burger').setAttribute('aria-expanded', open);
+}
+document.addEventListener('click', e => {
+  if (e.target.closest('.nav-links a')) toggleMenu(false);
+  else if (!e.target.closest('nav')) toggleMenu(false);
+});
+
+// ════════════════ Запуск ════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('year').textContent = new Date().getFullYear();
+  document.querySelectorAll('.js-book').forEach(a => a.href = BOOKING_URL);
+  bkCheckReturn();
+  document.querySelectorAll('#calc-adults button').forEach(b => b.addEventListener('click', () => {
+    calc.adults = Number(b.dataset.v);
+    document.querySelectorAll('#calc-adults button').forEach(x => x.classList.toggle('on', x === b));
+    renderCalc();
+  }));
+  document.getElementById('calc-income').addEventListener('input', renderCalc);
+  document.querySelectorAll('#calc-country button').forEach(b => b.addEventListener('click', () => {
+    calc.country = b.dataset.c; renderCalcVisas(); renderCalc();
+  }));
+  initFlow();
+  initBgFlow();
+  initSlider();
+  renderAll();
+});
+</script>
+</body>
+</html>
