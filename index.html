@@ -547,7 +547,7 @@ const LEAD_FALLBACK = 'https://t.me/MigrALLPT';
 
 // Запись на консультацию с оплатой: адрес того же сервера на Render, БЕЗ /api на конце.
 // Пример: 'https://telegram-consultation-bot.onrender.com'. Пока пусто — кнопки «Записаться» ведут в Telegram-бота.
-const BOOKING_API = '';
+const BOOKING_API = 'https://telegram-consultation-bot.onrender.com';
 // Site key Cloudflare Turnstile, если капча включена на сервере (TURNSTILE_SECRET). Иначе оставьте пустым.
 const TURNSTILE_SITEKEY = '';
 
@@ -1223,6 +1223,7 @@ const BK_ERR = () => ({
   rate_limited: L('Слишком много попыток. Попробуйте позже или запишитесь через Telegram-бота.','Too many attempts. Try later or book through the Telegram bot.'),
   captcha_failed: L('Подтвердите, что вы не робот, и нажмите оплату ещё раз.','Please complete the robot check and try again.'),
   busy: L('Сейчас слишком много незавершённых оплат. Попробуйте через несколько минут.','Too many unfinished payments right now. Try again in a few minutes.'),
+  payments_off: L('Оплата на сайте пока не подключена. Запишитесь, пожалуйста, через Telegram-бота — это займёт минуту.','Online payment is not connected yet. Please book through the Telegram bot — it takes a minute.'),
   generic: L('Не удалось перейти к оплате. Попробуйте ещё раз или запишитесь через Telegram-бота.','Could not open payment. Try again or book through the Telegram bot.')
 });
 
@@ -1297,7 +1298,7 @@ function bkLoadSlots(){
     .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
     .then(d => {
       if (my !== bkSlotsReq) return;
-      bk.slots = d.slots || []; bk.price = d.price_eur || BK_PRICE[bk.type]; bk.hold = d.hold_minutes || bk.hold;
+      bk.slots = d.slots || []; bk.price = d.price_eur || BK_PRICE[bk.type]; bk.hold = d.hold_minutes || bk.hold; bk.payments = d.payments !== false;
       if (bk.day && !bk.slots.some(s => s.date === bk.day)) bk.day = null;
       if (bk.slot && !bk.slots.some(s => s.value === bk.slot)) bk.slot = null;
       bk.loading = false; bkRenderSchedule(); bkSummary();
@@ -1325,6 +1326,14 @@ function bkRenderSchedule(){
 function bkSummary(){
   const s = document.getElementById('bk-summary'), p = document.getElementById('bk-pay'); if (!s) return;
   s.textContent = bk.slot ? `${bkTypeName(bk.type)}, ${bkLong(bk.slot)} ${L('по Лиссабону','Lisbon time')}${bkLocal(bk.slot)}` : L('Выберите день и время','Choose a day and time');
+  if (bk.payments === false){
+    // оплата на сервере ещё не включена — ведём в Telegram-бота
+    p.textContent = L('Записаться через Telegram-бота','Book through the Telegram bot');
+    p.disabled = false;
+    p.onclick = () => window.open(BOOKING_URL, '_blank', 'noopener');
+    return;
+  }
+  p.onclick = bkSubmit;
   p.textContent = bk.busy ? L('Переходим к оплате…','Opening payment…') : L(`Оплатить ${bk.price} €`, `Pay €${bk.price}`);
   p.disabled = bk.busy;
 }
