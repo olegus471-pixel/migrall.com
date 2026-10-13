@@ -537,7 +537,7 @@ footer{color:var(--ink2);padding:56px 0 24px;background:#F4F5F8;border-top:1px s
 </footer>
 <script>
 // ════════════════ Настройки ════════════════
-// Куда ведут все кнопки «Записаться». Когда подключим запись с оплатой — заменим на '/booking.html'
+// Telegram-бот записи — запасной путь, если сервер записи недоступен
 const BOOKING_URL = 'https://t.me/my_appt_bot';
 
 // Куда отправляются заявки на услуги: адрес вашего сервера на Render + /api/lead
@@ -545,8 +545,9 @@ const BOOKING_URL = 'https://t.me/my_appt_bot';
 const LEAD_ENDPOINT = 'https://telegram-consultation-bot.onrender.com/api/lead';
 const LEAD_FALLBACK = 'https://t.me/MigrALLPT';
 
-// Запись на консультацию с оплатой: адрес того же сервера на Render, БЕЗ /api на конце.
-// Пример: 'https://telegram-consultation-bot.onrender.com'. Пока пусто — кнопки «Записаться» ведут в Telegram-бота.
+// Запись на консультацию: адрес сервера бота записи на Render, БЕЗ /api на конце.
+// Сайт берёт свободное время (/api/slots) и отправляет заявку (/api/request): время резервируется,
+// администратор подтверждает или отклоняет её в боте. Пока пусто — кнопки «Записаться» ведут в Telegram-бота.
 const BOOKING_API = 'https://telegram-consultation-bot.onrender.com';
 // Site key Cloudflare Turnstile, если капча включена на сервере (TURNSTILE_SECRET). Иначе оставьте пустым.
 const TURNSTILE_SITEKEY = '';
@@ -1186,7 +1187,7 @@ document.addEventListener('keydown', e => {
   }
 });
 
-// ════════════════ Запись на консультацию с оплатой ════════════════
+// ════════════════ Запись на консультацию: заявка → бот → подтверждение администратора ════════════════
 const bk = { type:'intro', slots:[], day:null, slot:null, price:60, hold:30, busy:false, view:'form', ref:null,
              form:{ name:'', email:'', tg:'', comment:'', consent:false }, captcha:'', captchaId:null, poll:null };
 const BK_PRICE = { intro:60, consultation:120 };
@@ -1221,10 +1222,9 @@ const BK_ERR = () => ({
   consent_required: L('Отметьте согласие на обработку данных.','Tick the data processing consent.'),
   slot_taken: L('Это время только что заняли. Выберите другое.','Someone just took this time. Choose another one.'),
   rate_limited: L('Слишком много попыток. Попробуйте позже или запишитесь через Telegram-бота.','Too many attempts. Try later or book through the Telegram bot.'),
-  captcha_failed: L('Подтвердите, что вы не робот, и нажмите оплату ещё раз.','Please complete the robot check and try again.'),
-  busy: L('Сейчас слишком много незавершённых оплат. Попробуйте через несколько минут.','Too many unfinished payments right now. Try again in a few minutes.'),
-  payments_off: L('Оплата на сайте пока не подключена. Запишитесь, пожалуйста, через Telegram-бота — это займёт минуту.','Online payment is not connected yet. Please book through the Telegram bot — it takes a minute.'),
-  generic: L('Не удалось перейти к оплате. Попробуйте ещё раз или запишитесь через Telegram-бота.','Could not open payment. Try again or book through the Telegram bot.')
+  captcha_failed: L('Подтвердите, что вы не робот, и отправьте заявку ещё раз.','Please complete the robot check and send the request again.'),
+  busy: L('Сейчас слишком много заявок. Попробуйте через несколько минут.','Too many requests right now. Try again in a few minutes.'),
+  generic: L('Не удалось отправить заявку. Попробуйте ещё раз или запишитесь через Telegram-бота.','Could not send the request. Try again or book through the Telegram bot.')
 });
 
 function openBooking(type){
@@ -1256,7 +1256,7 @@ function renderBooking(){
   const f = bk.form;
   body.innerHTML = `
     <div class="lead-title" id="bk-title">${L('Запись на консультацию','Book a consultation')}</div>
-    <p class="lead-sub">${L('Онлайн в Google Meet, 1 час. Ссылка на встречу придёт на почту сразу после оплаты.','Online via Google Meet, 1 hour. The meeting link is emailed right after payment.')}</p>
+    <p class="lead-sub">${L('Онлайн в Google Meet, 1 час. Выбранное время сразу закрепляется за вами, администратор подтверждает запись, и ссылка на встречу приходит на почту.','Online via Google Meet, 1 hour. The time you pick is reserved for you right away; an administrator confirms the booking and the meeting link is emailed to you.')}</p>
     <div class="bk-types">
       ${['intro','consultation'].map(t => `<button type="button" class="bk-type ${bk.type===t?'on':''}" data-t="${t}" aria-pressed="${bk.type===t}">
         <b>${bkTypeName(t)}</b><span class="pr">${BK_PRICE[t]} €</span>
@@ -1277,8 +1277,7 @@ function renderBooking(){
     <div class="bk-summary" id="bk-summary"></div>
     <button class="btn-primary" type="button" id="bk-pay"></button>
     <p class="bk-err" id="bk-err" role="alert" hidden></p>
-    <p class="lead-note">${L(`Оплата картой, Apple Pay или Google Pay через Revolut. Время держим за вами ${bk.hold} минут.`, `Pay by card, Apple Pay or Google Pay via Revolut. We hold the time for ${bk.hold} minutes.`)}</p>
-    <p class="bk-alt">${L('Оплачиваете российской картой или криптовалютой?','Paying with a Russian card or crypto?')} <a href="${BOOKING_URL}" target="_blank" rel="noopener">${L('Запишитесь через Telegram-бота','Book through the Telegram bot')}</a></p>`;
+    <p class="lead-note">${L('Обычно подтверждаем в течение рабочего дня. Если время не подойдёт, предложим другое.','We usually confirm within a business day. If the time does not work, we will suggest another one.')}</p>`;
   body.querySelectorAll('.bk-type').forEach(b => b.onclick = () => {
     if (bk.type === b.dataset.t) return;
     bkSaveForm(); bk.type = b.dataset.t; bk.day = null; bk.slot = null; bk.price = BK_PRICE[bk.type];
@@ -1298,7 +1297,7 @@ function bkLoadSlots(){
     .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
     .then(d => {
       if (my !== bkSlotsReq) return;
-      bk.slots = d.slots || []; bk.price = d.price_eur || BK_PRICE[bk.type]; bk.hold = d.hold_minutes || bk.hold; bk.payments = d.payments !== false;
+      bk.slots = d.slots || []; bk.price = d.price_eur || BK_PRICE[bk.type]; bk.hold = d.hold_minutes || bk.hold;
       if (bk.day && !bk.slots.some(s => s.date === bk.day)) bk.day = null;
       if (bk.slot && !bk.slots.some(s => s.value === bk.slot)) bk.slot = null;
       bk.loading = false; bkRenderSchedule(); bkSummary();
@@ -1326,15 +1325,8 @@ function bkRenderSchedule(){
 function bkSummary(){
   const s = document.getElementById('bk-summary'), p = document.getElementById('bk-pay'); if (!s) return;
   s.textContent = bk.slot ? `${bkTypeName(bk.type)}, ${bkLong(bk.slot)} ${L('по Лиссабону','Lisbon time')}${bkLocal(bk.slot)}` : L('Выберите день и время','Choose a day and time');
-  if (bk.payments === false){
-    // оплата на сервере ещё не включена — ведём в Telegram-бота
-    p.textContent = L('Записаться через Telegram-бота','Book through the Telegram bot');
-    p.disabled = false;
-    p.onclick = () => window.open(BOOKING_URL, '_blank', 'noopener');
-    return;
-  }
   p.onclick = bkSubmit;
-  p.textContent = bk.busy ? L('Переходим к оплате…','Opening payment…') : L(`Оплатить ${bk.price} €`, `Pay €${bk.price}`);
+  p.textContent = bk.busy ? L('Отправляем заявку…','Sending request…') : L('Записаться','Book');
   p.disabled = bk.busy;
 }
 function bkErr(code){ const e = document.getElementById('bk-err'); if (!e) return; if (!code){ e.hidden = true; return; } e.textContent = BK_ERR()[code] || BK_ERR().generic; e.hidden = false; }
@@ -1355,7 +1347,7 @@ function bkCaptcha(){
   document.head.appendChild(sc);
 }
 
-function bkSubmit(){
+async function bkSubmit(){
   bkErr(); bkSaveForm();
   const f = bk.form;
   if (!bk.slot) return bkErr('slot');
@@ -1363,42 +1355,86 @@ function bkSubmit(){
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(f.email.trim())) return bkErr('email_invalid');
   if (!f.consent) return bkErr('consent_required');
   if (TURNSTILE_SITEKEY && !bk.captcha) return bkErr('captcha_failed');
+  const data = { type:bk.type, slot:bk.slot, name:f.name.trim(), email:f.email.trim(),
+    telegram:f.tg.trim(), comment:f.comment.trim(), website:document.getElementById('bk-website').value,
+    consent:true, lang, page:location.href, captcha:bk.captcha, turnstile:bk.captcha, 'cf-turnstile-response':bk.captcha };
+  if (data.website) return; // скрытое поле заполнил бот
   bk.busy = true; bkSummary();
-  fetch(`${BOOKING_API}/api/book`, { method:'POST', headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({ type:bk.type, slot:bk.slot, name:f.name.trim(), email:f.email.trim(),
-      telegram:f.tg.trim(), comment:f.comment.trim(), website:document.getElementById('bk-website').value,
-      consent:true, lang, captcha:bk.captcha, turnstile:bk.captcha, 'cf-turnstile-response':bk.captcha }) })
-    .then(r => r.json().catch(() => ({})).then(b => ({ ok:r.ok, b })))
-    .then(({ok, b}) => {
-      if (ok && b.checkout_url){ location.href = b.checkout_url; return; }
-      bk.busy = false; bkSummary(); bkErr(b.error || 'generic');
+  const post = (url, body) => fetch(url, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) })
+    .then(r => r.json().catch(() => ({})).then(b => ({ ok:r.ok, status:r.status, b })));
+  const done = (state, ref) => {
+    bk.busy = false; bk.status = { state, type:bk.type, slot:bk.slot, email:data.email, ref };
+    bk.view = 'status'; bk.ref = ref || null;
+    if (ref) history.replaceState(null, '', location.pathname + '?booking=' + encodeURIComponent(ref) + location.hash);
+    renderBooking();
+    if (ref) bkPoll(ref, 120);
+  };
+  try {
+    // 1) заявка в бот: время резервируется, администратор подтверждает в Telegram
+    const r = await post(`${BOOKING_API}/api/request`, data);
+    if (r.ok && (r.b.ref || r.b.ok)) return done(r.b.state || 'awaiting', r.b.ref);
+    if (r.status !== 404 && r.status !== 405){
+      bk.busy = false; bkSummary(); bkErr(r.b.error || 'generic');
       if (window.turnstile && bk.captchaId !== null) try { window.turnstile.reset(bk.captchaId); bk.captcha=''; } catch(e){}
-      if (b.error === 'slot_taken'){ bk.slot = null; bkLoadSlots(); }
-    })
-    .catch(() => { bk.busy = false; bkSummary(); bkErr('generic'); });
+      if (r.b.error === 'slot_taken'){ bk.slot = null; bkLoadSlots(); }
+      return;
+    }
+    // 2) сервер бота ещё не обновлён — отправляем как обычную заявку, администратор увидит её в боте
+    const l = await post(LEAD_ENDPOINT, { country:'pt', service:bkTypeName(bk.type)+' — '+bk.slot+' (Лиссабон)', name:data.name,
+      via:'email', contact:data.email, message:[data.telegram && ('Telegram: '+data.telegram), data.comment].filter(Boolean).join('\n'),
+      website:'', lang, page:location.href, booking:{ type:bk.type, slot:bk.slot } });
+    if (l.ok) return done('sent', null);
+    throw new Error('lead ' + l.status);
+  } catch(e){ bk.busy = false; bkSummary(); bkErr('generic'); }
+}
+function bkPoll(ref, tries){
+  clearTimeout(bk.poll);
+  const go = () => {
+    fetch(`${BOOKING_API}/api/booking/${encodeURIComponent(ref)}`).then(r => r.json()).then(d => {
+      if (!d || !d.state) return;
+      const changed = !bk.status || bk.status.state !== d.state;
+      bk.status = Object.assign({}, bk.status || {}, d);
+      if (changed && bk.view === 'status' && !document.getElementById('book-modal').hidden) renderBooking();
+      if (['awaiting','requested','pending'].includes(d.state) && --tries > 0) bk.poll = setTimeout(go, 15000);
+    }).catch(() => { if (--tries > 0) bk.poll = setTimeout(go, 15000); });
+  };
+  bk.poll = setTimeout(go, 15000);
 }
 
-// После оплаты Revolut возвращает клиента на сайт с ?booking=<номер брони>
+// Экран статуса заявки (и при возврате на сайт по ссылке ?booking=<номер заявки>)
 function bkRenderStatus(){
   const body = document.getElementById('bk-body');
   const d = bk.status;
+  const ok = `<div class="ok-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>`;
+  const when = d && d.slot ? `${esc(bkTypeName(d.type))}, ${esc(bkLong(d.slot))} ${L('по Лиссабону','Lisbon time')}${esc(bkLocal(d.slot))}` : '';
   let html;
-  if (!d || d.state === 'pending' && !bk.stuck){
+  if (!d){
     html = `<div class="lead-done"><div style="margin-bottom:14px"><span class="bk-spin" style="width:36px;height:36px;margin:0"></span></div>
-      <div class="lead-title" id="bk-title" style="margin:0 0 8px">${L('Проверяем оплату…','Checking your payment…')}</div>
-      <p class="lead-sub">${L('Обычно это занимает несколько секунд.','This usually takes a few seconds.')}</p></div>`;
+      <div class="lead-title" id="bk-title" style="margin:0 0 8px">${L('Проверяем заявку…','Checking your request…')}</div></div>`;
   } else if (d.state === 'confirmed'){
-    html = `<div class="lead-done"><div class="ok-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
-      <div class="lead-title" id="bk-title" style="margin:0 0 8px">${L('Вы записаны','You are booked')}</div>
-      <p class="lead-sub">${esc(bkTypeName(d.type))}, ${esc(bkLong(d.slot))} ${L('по Лиссабону','Lisbon time')}${esc(bkLocal(d.slot))}.<br>
-      ${L('Приглашение со ссылкой на Google Meet отправлено на','The Google Meet invite was sent to')} ${esc(d.email||'')}. ${L('Если письма нет, проверьте «Спам».','If you cannot find it, check spam.')}</p>
+    html = `<div class="lead-done">${ok}
+      <div class="lead-title" id="bk-title" style="margin:0 0 8px">${L('Запись подтверждена','Booking confirmed')}</div>
+      <p class="lead-sub">${when}.<br>
+      ${L('Приглашение со ссылкой на Google Meet отправлено на','The Google Meet invite was sent to')} ${esc(d.email||L('вашу почту','your email'))}. ${L('Если письма нет, проверьте «Спам».','If you cannot find it, check spam.')}</p>
       <button class="btn-primary" type="button" onclick="closeBooking()">${L('Готово','Done')}</button></div>`;
-  } else if (d.state === 'pending'){
-    html = `<div class="lead-done"><div class="lead-title" id="bk-title" style="margin:0 0 8px">${L('Оплата пока не подтвердилась','Payment not confirmed yet')}</div>
-      <p class="lead-sub">${L('Если вы оплатили, обновите страницу через пару минут или напишите нам в','If you paid, refresh the page in a couple of minutes or message us on')} <a href="${LEAD_FALLBACK}" target="_blank" rel="noopener" style="color:var(--acc);font-weight:600">Telegram</a>.</p></div>`;
+  } else if (d.state === 'sent'){
+    html = `<div class="lead-done">${ok}
+      <div class="lead-title" id="bk-title" style="margin:0 0 8px">${L('Заявка отправлена','Request sent')}</div>
+      <p class="lead-sub">${when}.<br>${L('Администратор проверит время и подтвердит запись — ссылку на встречу пришлём на','An administrator will check the time and confirm — we will send the meeting link to')} ${esc(d.email||'')}.</p>
+      <button class="btn-primary" type="button" onclick="closeBooking()">${L('Готово','Done')}</button></div>`;
+  } else if (['awaiting','requested','pending'].includes(d.state)){
+    html = `<div class="lead-done">${ok}
+      <div class="lead-title" id="bk-title" style="margin:0 0 8px">${L('Время зарезервировано','Time reserved')}</div>
+      <p class="lead-sub">${when}.<br>${L('Заявка у администратора. После подтверждения пришлём приглашение со ссылкой на Google Meet на','Your request is with an administrator. Once confirmed, we will send a Google Meet invite to')} ${esc(d.email||L('вашу почту','your email'))}.</p>
+      <p class="lead-note">${L('Статус можно проверить по этой ссылке — сохраните её.','You can check the status at this link — keep it.')}</p>
+      <button class="btn-primary" type="button" onclick="closeBooking()">${L('Готово','Done')}</button></div>`;
+  } else if (d.state === 'unknown'){
+    html = `<div class="lead-done"><div class="lead-title" id="bk-title" style="margin:0 0 8px">${L('Не удалось проверить заявку','Could not check the request')}</div>
+      <p class="lead-sub">${L('Попробуйте обновить страницу позже или напишите нам в','Try refreshing later or message us on')} <a href="${LEAD_FALLBACK}" target="_blank" rel="noopener" style="color:var(--acc);font-weight:600">Telegram</a>.</p>
+      <button class="btn-primary" type="button" onclick="closeBooking()">${L('Закрыть','Close')}</button></div>`;
   } else {
-    html = `<div class="lead-done"><div class="lead-title" id="bk-title" style="margin:0 0 8px">${L('Бронь снята','Booking released')}</div>
-      <p class="lead-sub">${L(`Оплата не поступила за ${d.hold_minutes||bk.hold} минут, и время освободилось. Если деньги списались, напишите нам в Telegram — разберёмся.`,`Payment did not arrive within ${d.hold_minutes||bk.hold} minutes, so the time was released. If you were charged, message us on Telegram.`)}</p>
+    html = `<div class="lead-done"><div class="lead-title" id="bk-title" style="margin:0 0 8px">${L('Это время не получилось подтвердить','We could not confirm this time')}</div>
+      <p class="lead-sub">${when ? when + '.<br>' : ''}${L('Выберите, пожалуйста, другое время или напишите нам в','Please choose another time or message us on')} <a href="${LEAD_FALLBACK}" target="_blank" rel="noopener" style="color:var(--acc);font-weight:600">Telegram</a>.</p>
       <button class="btn-primary" type="button" onclick="bkAgain()">${L('Выбрать другое время','Choose another time')}</button></div>`;
   }
   body.innerHTML = html;
@@ -1407,23 +1443,16 @@ function bkAgain(){ history.replaceState(null, '', location.pathname + location.
 function bkCheckReturn(){
   const ref = new URLSearchParams(location.search).get('booking');
   if (!ref || !BOOKING_API || !/^[a-z]-[0-9a-f]{6,32}$/i.test(ref)) return;
-  bk.view = 'status'; bk.ref = ref; bk.status = null; bk.stuck = false;
+  bk.view = 'status'; bk.ref = ref; bk.status = null;
   document.getElementById('book-modal').hidden = false; document.body.style.overflow = 'hidden';
   renderBooking();
-  let tries = 0;
-  const poll = () => {
-    tries++;
-    fetch(`${BOOKING_API}/api/booking/${encodeURIComponent(ref)}`).then(r => r.json()).then(d => {
-      bk.status = d;
-      if (d.state === 'pending' && tries < 40){ bk.poll = setTimeout(poll, 3000); }
-      else if (d.state === 'pending'){ bk.stuck = true; }
-      renderBooking();
-    }).catch(() => { if (tries < 40) bk.poll = setTimeout(poll, 3000); });
-  };
-  poll();
+  fetch(`${BOOKING_API}/api/booking/${encodeURIComponent(ref)}`).then(r => r.json()).then(d => {
+    bk.status = d && d.state ? d : { state:'unknown' }; renderBooking();
+    if (['awaiting','requested','pending'].includes(bk.status.state)) bkPoll(ref, 120);
+  }).catch(() => { bk.status = { state:'unknown' }; renderBooking(); });
 }
 
-// Все кнопки «Записаться» открывают запись (или Telegram-бота, пока сервер не подключён)
+// Все кнопки «Записаться» открывают форму записи (или Telegram-бота, если BOOKING_API пуст)
 document.addEventListener('click', e => {
   const a = e.target.closest('.js-book'); if (!a || !BOOKING_API) return;
   e.preventDefault(); toggleMenu(false); openBooking(a.dataset.type);
