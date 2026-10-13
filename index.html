@@ -3,6 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Политика безопасности: откуда странице разрешено грузить скрипты и куда отправлять данные.
+     Подключаете новый сервис (аналитика, виджет, другой сервер) — добавьте его домен сюда. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; media-src 'self' https://images.unsplash.com; connect-src 'self' https://telegram-consultation-bot.onrender.com https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>MigrAll — Иммиграция в Португалию</title>
 <meta name="description" content="MigrAll — иммиграционное агентство. Переезд в Португалию: подбор ВНЖ, документы, сопровождение до карты резидента.">
 <link rel="icon" href="logo.png">
@@ -1224,6 +1228,7 @@ const BK_ERR = () => ({
   rate_limited: L('Слишком много попыток. Попробуйте позже или запишитесь через Telegram-бота.','Too many attempts. Try later or book through the Telegram bot.'),
   captcha_failed: L('Подтвердите, что вы не робот, и отправьте заявку ещё раз.','Please complete the robot check and send the request again.'),
   busy: L('Сейчас слишком много заявок. Попробуйте через несколько минут.','Too many requests right now. Try again in a few minutes.'),
+  already_requested: L('С этого email уже есть заявка, ожидающая подтверждения. Дождитесь ответа или напишите нам в Telegram.','There is already a pending request from this email. Please wait for our reply or message us on Telegram.'),
   generic: L('Не удалось отправить заявку. Попробуйте ещё раз или запишитесь через Telegram-бота.','Could not send the request. Try again or book through the Telegram bot.')
 });
 
@@ -1311,10 +1316,10 @@ function bkRenderSchedule(){
   if (bk.loading){ box.innerHTML = head + `<div class="bk-msg"><span class="bk-spin"></span><span id="bk-loading">${L('Загружаем свободное время…','Loading available times…')}</span></div>`; return; }
   if (bk.loadError){ box.innerHTML = head + `<p class="bk-err">${L('Не удалось загрузить расписание.','Could not load the schedule.')} <a href="#" id="bk-retry" style="color:inherit;font-weight:600">${L('Повторить','Retry')}</a></p>`; document.getElementById('bk-retry').onclick = e => { e.preventDefault(); bkLoadSlots(); }; return; }
   if (!bk.slots.length){ box.innerHTML = head + `<p class="bk-msg">${L('Свободного времени на ближайшие дни нет. Напишите нам в Telegram — подберём время.','No free times in the coming days. Message us on Telegram and we will find a time.')} <a href="${LEAD_FALLBACK}" target="_blank" rel="noopener" style="color:var(--acc);font-weight:600">Telegram</a></p>`; return; }
-  const days = [...new Set(bk.slots.map(s => s.date))];
+  const days = [...new Set(bk.slots.map(s => s.date).filter(d => /^\d{4}-\d{2}-\d{2}$/.test(d)))];
   if (!bk.day) bk.day = days[0];
   box.innerHTML = head + `<div class="bk-days">${days.map(d => { const [y,m,dd] = d.split('-').map(Number);
-      return `<button type="button" class="bk-day ${d===bk.day?'on':''}" data-d="${d}" aria-pressed="${d===bk.day}"><span class="w">${bkDateFmt({weekday:'short'},y,m,dd)}</span><span class="n">${dd}</span><span class="m">${bkDateFmt({month:'short'},y,m,dd).replace('.','')}</span></button>`; }).join('')}</div>
+      return `<button type="button" class="bk-day ${d===bk.day?'on':''}" data-d="${esc(d)}" aria-pressed="${d===bk.day}"><span class="w">${bkDateFmt({weekday:'short'},y,m,dd)}</span><span class="n">${dd}</span><span class="m">${bkDateFmt({month:'short'},y,m,dd).replace('.','')}</span></button>`; }).join('')}</div>
     <div class="bk-h">${L('Время по Лиссабону','Time in Lisbon')}</div>
     <div class="bk-times">${bk.slots.filter(s => s.date === bk.day).map(s => `<button type="button" class="bk-time ${s.value===bk.slot?'on':''}" data-s="${esc(s.value)}" aria-pressed="${s.value===bk.slot}">${esc(s.time)}</button>`).join('')}</div>
     <div class="bk-hint">${L('Запись открыта начиная с завтрашнего дня.','Booking opens from tomorrow.')}</div>`;
