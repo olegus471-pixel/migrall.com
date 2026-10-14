@@ -5,14 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Политика безопасности: откуда странице разрешено грузить скрипты и куда отправлять данные.
      Подключаете новый сервис (аналитика, виджет, другой сервер) — добавьте его домен сюда. -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; media-src 'self' https://images.unsplash.com; connect-src 'self' https://telegram-consultation-bot.onrender.com https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://images.unsplash.com; media-src 'self' https://images.unsplash.com; connect-src 'self' https://telegram-consultation-bot.onrender.com https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>MigrAll — Иммиграция в Португалию</title>
 <meta name="description" content="MigrAll — иммиграционное агентство. Переезд в Португалию: подбор ВНЖ, документы, сопровождение до карты резидента.">
 <link rel="icon" href="logo.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fonts/fonts.css">
 <style>
 :root{
   --ink:#141B2D;--ink2:#3A4357;--ink3:#6B7385;
@@ -296,6 +294,8 @@ footer{color:var(--ink2);padding:56px 0 24px;background:#F4F5F8;border-top:1px s
 .footer-col h4{font-size:.8125rem;font-weight:600;color:var(--ink);margin-bottom:14px}
 .footer-col a{display:block;font-size:.875rem;margin-bottom:8px;transition:color .15s}
 .footer-col a:hover{color:var(--acc)}
+.footer-bottom a{color:var(--ink3);text-decoration:underline}.footer-bottom a:hover{color:var(--acc)}
+.lf-consent a{color:var(--acc);text-decoration:underline}
 .footer-bottom{border-top:1px solid var(--border);color:var(--ink3);padding-top:20px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.8rem}
 
 @media(max-width:860px){
@@ -536,7 +536,7 @@ footer{color:var(--ink2);padding:56px 0 24px;background:#F4F5F8;border-top:1px s
       <div class="footer-col"><h4 data-i18n="footer_svc">Услуги</h4><a href="#services" data-i18n="fs1">Сопровождение ВНЖ</a><a href="#services" data-i18n="fs2">Переводы</a><a href="#services" data-i18n="fs3">Консультации</a><a href="#services" data-i18n="fs4">Недвижимость</a></div>
       <div class="footer-col"><h4 data-i18n="footer_ct">Контакты</h4><a href="https://t.me/MigrAll" target="_blank" rel="noopener">Telegram-канал</a><a href="https://t.me/MigrALLPT" target="_blank" rel="noopener" data-i18n="footer_req">Написать запрос</a><a href="https://www.instagram.com/migrallportugal" target="_blank" rel="noopener">Instagram</a></div>
     </div>
-    <div class="footer-bottom"><span>© <span id="year">2026</span> MigrAll</span><span data-i18n="footer_copy">Консалтинговые услуги в иммиграционных процессах</span></div>
+    <div class="footer-bottom"><span>© <span id="year">2026</span> MigrAll</span><span data-i18n="footer_copy">Консалтинговые услуги в иммиграционных процессах</span><a class="js-privacy" href="privacy.html?lang=ru" data-i18n="footer_privacy">Политика конфиденциальности и cookies</a></div>
   </div>
 </footer>
 <script>
@@ -632,7 +632,7 @@ const T = {
     form_tag:'Запись',form_title:'Начнём работу',form_sub:'Выберите формат консультации и удобное время — это займёт пару минут.',
     contact_alt_q:'Есть вопрос по конкретной услуге?',contact_alt_link:'Напишите нам',
     footer_desc:'Иммиграционное агентство. Переезд в Португалию.',footer_svc:'Услуги',footer_ct:'Контакты',footer_req:'Написать запрос',
-    footer_copy:'Консалтинговые услуги в иммиграционных процессах',fs1:'Сопровождение ВНЖ',fs2:'Переводы',fs3:'Консультации',fs4:'Недвижимость'
+    footer_copy:'Консалтинговые услуги в иммиграционных процессах',footer_privacy:'Политика конфиденциальности и cookies',fs1:'Сопровождение ВНЖ',fs2:'Переводы',fs3:'Консультации',fs4:'Недвижимость'
   },
   en:{
     nav_quiz:'Find your visa',nav_calc:'Calculator',nav_services:'Services',nav_contact:'Contact',nav_cta:'Book now',
@@ -652,7 +652,7 @@ const T = {
     form_tag:'Book',form_title:"Let's get started",form_sub:'Choose the consultation format and a convenient time — it takes a couple of minutes.',
     contact_alt_q:'Have a question about a specific service?',contact_alt_link:'Message us',
     footer_desc:'Immigration agency. Relocation to Portugal.',footer_svc:'Services',footer_ct:'Contact',footer_req:'Send a request',
-    footer_copy:'Consulting services in immigration processes',fs1:'Residence permit',fs2:'Translations',fs3:'Consultations',fs4:'Real estate'
+    footer_copy:'Consulting services in immigration processes',footer_privacy:'Privacy & cookie policy',fs1:'Residence permit',fs2:'Translations',fs3:'Consultations',fs4:'Real estate'
   }
 };
 
@@ -989,6 +989,7 @@ function setLang(l){
   document.documentElement.lang = l;
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.textContent === l.toUpperCase()));
   document.querySelectorAll('[data-i18n]').forEach(el => { const k = el.dataset.i18n; if (T[l][k]) el.textContent = T[l][k]; });
+  document.querySelectorAll('.js-privacy').forEach(a => a.href = 'privacy.html?lang=' + l);
   renderAll();
 }
 
@@ -1093,7 +1094,7 @@ function renderLeadForm(prev = {}){
       <div class="lf"><label for="lf-msg">${L('Комментарий (необязательно)','Comment (optional)')}</label>
         <textarea id="lf-msg" name="message" maxlength="1500" placeholder="${L('Кратко опишите ситуацию или вопрос','Briefly describe your situation or question')}">${esc(prev.message||'')}</textarea></div>
       <div class="lf-hp" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
-      <label class="lf-consent" id="lf-consent-w"><input type="checkbox" id="lf-consent" required><span>${L('Согласен на обработку персональных данных для ответа на заявку','I agree to the processing of my personal data to handle this request')}</span></label>
+      <label class="lf-consent" id="lf-consent-w"><input type="checkbox" id="lf-consent" required><span>${L('Я ознакомлен(а) с <a href="privacy.html?lang=ru" target="_blank" rel="noopener">политикой конфиденциальности</a> и согласен(на) на обработку данных для ответа на заявку','I have read the <a href="privacy.html?lang=en" target="_blank" rel="noopener">privacy policy</a> and agree to my data being processed to handle this request')}</span></label>
       <div id="lf-fail"></div>
       <button class="btn-primary" type="submit" id="lf-submit">${L('Отправить заявку','Send request')}</button>
     </form>`;
@@ -1277,7 +1278,7 @@ function renderBooking(){
     <div class="lf"><label for="bk-tg">${L('Telegram (необязательно)','Telegram (optional)')}</label><input id="bk-tg" placeholder="@username" maxlength="64" value="${esc(f.tg)}"></div>
     <div class="lf"><label for="bk-comment">${L('Коротко о ситуации (необязательно)','Briefly, your situation (optional)')}</label><textarea id="bk-comment" maxlength="1000">${esc(f.comment)}</textarea></div>
     <div class="lf-hp" aria-hidden="true"><label>Website<input id="bk-website" tabindex="-1" autocomplete="off"></label></div>
-    <label class="lf-consent"><input type="checkbox" id="bk-consent" ${f.consent?'checked':''}><span>${L('Согласен на обработку персональных данных для проведения консультации','I agree to the processing of my personal data for this consultation')}</span></label>
+    <label class="lf-consent"><input type="checkbox" id="bk-consent" ${f.consent?'checked':''}><span>${L('Я ознакомлен(а) с <a href="privacy.html?lang=ru" target="_blank" rel="noopener">политикой конфиденциальности</a> и согласен(на) на обработку данных для проведения консультации','I have read the <a href="privacy.html?lang=en" target="_blank" rel="noopener">privacy policy</a> and agree to my data being processed for this consultation')}</span></label>
     ${TURNSTILE_SITEKEY ? '<div class="bk-captcha" id="bk-captcha"></div>' : ''}
     <div class="bk-summary" id="bk-summary"></div>
     <button class="btn-primary" type="button" id="bk-pay"></button>
