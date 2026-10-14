@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Политика безопасности: откуда странице разрешено грузить скрипты и куда отправлять данные.
      Подключаете новый сервис (аналитика, виджет, другой сервер) — добавьте его домен сюда. -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://images.unsplash.com; media-src 'self' https://images.unsplash.com; connect-src 'self' https://telegram-consultation-bot.onrender.com https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; media-src 'self'; connect-src 'self' https://telegram-consultation-bot.onrender.com https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>MigrAll — Иммиграция в Португалию</title>
 <meta name="description" content="MigrAll — иммиграционное агентство. Переезд в Португалию: подбор ВНЖ, документы, сопровождение до карты резидента.">
@@ -562,7 +562,8 @@ const RATES = {
 };
 
 // ════════════════ Данные стран ════════════════
-const U = (id, w) => `https://images.unsplash.com/${id}?w=${w}&q=80`;
+// Фото лежат на самом сайте (папка img/), без загрузки с Unsplash
+const U = (id, w) => `img/${id}.jpg`;
 const COUNTRIES = {
   pt: {
     heroVideo: '', // можно положить hero-pt.mp4 в репозиторий и вписать сюда 'hero-pt.mp4'
